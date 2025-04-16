@@ -1,5 +1,5 @@
 plugins {
-	java
+	id("java")
 	id("org.springframework.boot") version "3.4.4"
 	id("io.spring.dependency-management") version "1.1.7"
 }
@@ -32,4 +32,14 @@ dependencies {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+val copyPublicResources by tasks.registering(Copy::class) {
+	from("./angularclient/dist/angularclient/browser/")
+	into("./src/main/resources/static/")
+	dependsOn(":angularclient:buildApp")
+}
+
+tasks.named("processResources") {
+	dependsOn(copyPublicResources)
 }
