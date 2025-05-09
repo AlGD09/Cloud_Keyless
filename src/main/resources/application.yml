@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: coresystem-poc
+  h2:
+    console.enabled: true
+  datasource:
+    url: jdbc:h2:mem:dcbapp
+    driver-class-name: org.h2.Driver
+    jpa:
+      spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
