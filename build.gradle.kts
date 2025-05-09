@@ -34,6 +34,7 @@ dependencies {
 jib {
 	container {
 		mainClass = "com.datix.coresystem_poc.CoresystemPocApplication"
+		creationTime = "USE_CURRENT_TIMESTAMP"
 	}
 	from {
 		image = "eclipse-temurin:23-jdk"
