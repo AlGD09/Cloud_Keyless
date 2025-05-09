@@ -1,13 +1,20 @@
 package com.datix.coresystem_poc;
 
+import com.datix.coresystem_poc.entities.RentedWallbox;
 import com.datix.coresystem_poc.entities.User;
+import com.datix.coresystem_poc.entities.Wallbox;
+import com.datix.coresystem_poc.entities.WallboxOwner;
+import com.datix.coresystem_poc.repositories.RentedWallboxRepository;
 import com.datix.coresystem_poc.repositories.UserRepository;
+import com.datix.coresystem_poc.repositories.WallboxOwnerRepository;
+import com.datix.coresystem_poc.repositories.WallboxRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
 @SpringBootApplication
@@ -28,6 +35,25 @@ public class CoresystemPocApplication {
                 userRepository.save(user);
             });
             userRepository.findAll().forEach(System.out::println);
+        };
+    }
+
+    @Bean
+    CommandLineRunner initialObjects(WallboxOwnerRepository ownerRepository, WallboxRepository wallboxRepository,
+                                     RentedWallboxRepository rentedWallboxRepository) {
+        return args -> {
+            WallboxOwner owner = WallboxOwner.builder().name("Alice").build();
+            ownerRepository.save(owner);
+
+            Wallbox wallbox = Wallbox.builder().physicalId(1).name("Wallbox 1").owner(owner).build();
+            wallboxRepository.save(wallbox);
+
+            RentedWallbox rentedWallbox = RentedWallbox.builder()
+                    .wallbox(wallbox)
+                    .startTime(LocalDateTime.now())
+                    .endTime(LocalDateTime.now().plusDays(1)).build();
+            rentedWallboxRepository.save(rentedWallbox);
+            rentedWallboxRepository.findAll().forEach(System.out::println);
         };
     }
 }
