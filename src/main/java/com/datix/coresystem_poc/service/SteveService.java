@@ -30,26 +30,29 @@ public class SteveService {
 
     public String triggerRemoteStart(RentedWallbox rentedWallbox) {
 
-        // Headers
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
-        // Body
-        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-        body.add(CHARGE_POINT_KEY, String.format(CHARGE_POINT_VALUE_FORMAT, rentedWallbox.getWallbox().getPhysicalId()));
-        body.add(CONNECTOR_ID_KEY, CONNECTOR_ID_VALUE);
-        body.add(ID_TAG_KEY, ID_TAG_VALUE);
-
-        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(body, headers);
-
-        // Request
         ResponseEntity<String> response = steveRestTemplate.postForEntity(
                 STEVE_URL + REMOTE_START_PATH,
-                requestEntity,
+                createRemoteStartRequest(rentedWallbox.getWallbox().getPhysicalId()),
                 String.class
         );
 
         return response.getBody();
+    }
+
+    private HttpEntity<MultiValueMap<String, String>> createRemoteStartRequest(String wallboxPhysicalId) {
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add(CHARGE_POINT_KEY, String.format(CHARGE_POINT_VALUE_FORMAT, wallboxPhysicalId));
+        body.add(CONNECTOR_ID_KEY, CONNECTOR_ID_VALUE);
+        body.add(ID_TAG_KEY, ID_TAG_VALUE);
+
+        return new HttpEntity<>(body, createRequestHeader());
+    }
+
+    private HttpHeaders createRequestHeader() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        return  headers;
     }
 
 }
