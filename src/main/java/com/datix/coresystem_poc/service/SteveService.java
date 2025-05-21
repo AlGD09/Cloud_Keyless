@@ -18,8 +18,10 @@ public class SteveService {
     private RestTemplate steveRestTemplate;
 
     private final String STEVE_URL = "http://localhost:8180";
+    private final String STEVE_ELEKEY_PATH = "/steve/elekey";
 
-    private final String REMOTE_START_PATH = "/steve/elekey/RemoteStart";
+    private final String REMOTE_START_PATH = "/RemoteStart";
+    private final String REMOTE_STOP_PATH = "/RemoteStop";
 
     private final String CHARGE_POINT_KEY = "chargePointSelectList";
     private final String CHARGE_POINT_VALUE_FORMAT = "V_16_JSON;%s;-";
@@ -27,12 +29,22 @@ public class SteveService {
     private final String CONNECTOR_ID_VALUE = "0";
     private final String ID_TAG_KEY = "idTag";
     private final String ID_TAG_VALUE = "42D8114A";
+    private final String TRANSACTION_ID_KEY = "transactionId";
 
     public String triggerRemoteStart(RentedWallbox rentedWallbox) {
-
         ResponseEntity<String> response = steveRestTemplate.postForEntity(
-                STEVE_URL + REMOTE_START_PATH,
+                STEVE_URL + STEVE_ELEKEY_PATH + REMOTE_START_PATH,
                 createRemoteStartRequest(rentedWallbox.getWallbox().getPhysicalId()),
+                String.class
+        );
+
+        return response.getBody();
+    }
+
+    public String triggerRemoteStop(RentedWallbox rentedWallbox) {
+        ResponseEntity<String> response = steveRestTemplate.postForEntity(
+                STEVE_URL + STEVE_ELEKEY_PATH + REMOTE_STOP_PATH,
+                createRemoteStopRequest(rentedWallbox.getWallbox().getPhysicalId()),
                 String.class
         );
 
@@ -48,11 +60,19 @@ public class SteveService {
         return new HttpEntity<>(body, createRequestHeader());
     }
 
+    private HttpEntity<MultiValueMap<String, String>> createRemoteStopRequest(String wallboxPhysicalId) {
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add(CHARGE_POINT_KEY, String.format(CHARGE_POINT_VALUE_FORMAT, wallboxPhysicalId));
+        body.add(TRANSACTION_ID_KEY, "10");//TODO
+
+        return new HttpEntity<>(body, createRequestHeader());
+    }
+
     private HttpHeaders createRequestHeader() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        return  headers;
+        return headers;
     }
 
 }
