@@ -1,7 +1,7 @@
-package com.datix.coresystem_poc.controllers;
+package com.datix.coresystem_poc.controller;
 
-import com.datix.coresystem_poc.entities.RentedWallbox;
-import com.datix.coresystem_poc.repositories.RentedWallboxRepository;
+import com.datix.coresystem_poc.entity.RentedWallbox;
+import com.datix.coresystem_poc.repository.RentedWallboxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

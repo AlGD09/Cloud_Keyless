@@ -1,4 +1,4 @@
-package com.datix.coresystem_poc.controllers;
+package com.datix.coresystem_poc.controller;
 
 import com.datix.coresystem_poc.dto.RentedWallboxRegistrationDTO;
 import org.springframework.http.HttpStatus;

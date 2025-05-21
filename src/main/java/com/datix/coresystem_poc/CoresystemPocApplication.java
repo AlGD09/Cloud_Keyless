@@ -1,13 +1,13 @@
 package com.datix.coresystem_poc;
 
-import com.datix.coresystem_poc.entities.RentedWallbox;
-import com.datix.coresystem_poc.entities.User;
-import com.datix.coresystem_poc.entities.Wallbox;
-import com.datix.coresystem_poc.entities.WallboxOwner;
-import com.datix.coresystem_poc.repositories.RentedWallboxRepository;
-import com.datix.coresystem_poc.repositories.UserRepository;
-import com.datix.coresystem_poc.repositories.WallboxOwnerRepository;
-import com.datix.coresystem_poc.repositories.WallboxRepository;
+import com.datix.coresystem_poc.entity.RentedWallbox;
+import com.datix.coresystem_poc.entity.User;
+import com.datix.coresystem_poc.entity.Wallbox;
+import com.datix.coresystem_poc.entity.WallboxOwner;
+import com.datix.coresystem_poc.repository.RentedWallboxRepository;
+import com.datix.coresystem_poc.repository.UserRepository;
+import com.datix.coresystem_poc.repository.WallboxOwnerRepository;
+import com.datix.coresystem_poc.repository.WallboxRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

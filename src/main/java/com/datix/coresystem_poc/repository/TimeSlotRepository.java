@@ -1,6 +1,6 @@
-package com.datix.coresystem_poc.repositories;
+package com.datix.coresystem_poc.repository;
 
-import com.datix.coresystem_poc.entities.TimeSlot;
+import com.datix.coresystem_poc.entity.TimeSlot;
 import org.springframework.data.repository.CrudRepository;
 
 public interface TimeSlotRepository extends CrudRepository<TimeSlot, Long> {}

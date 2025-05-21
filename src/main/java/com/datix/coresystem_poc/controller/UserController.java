@@ -1,7 +1,7 @@
-package com.datix.coresystem_poc.controllers;
+package com.datix.coresystem_poc.controller;
 
-import com.datix.coresystem_poc.entities.User;
-import com.datix.coresystem_poc.repositories.UserRepository;
+import com.datix.coresystem_poc.entity.User;
+import com.datix.coresystem_poc.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

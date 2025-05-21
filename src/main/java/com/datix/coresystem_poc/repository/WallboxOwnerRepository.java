@@ -1,6 +1,6 @@
-package com.datix.coresystem_poc.repositories;
+package com.datix.coresystem_poc.repository;
 
-import com.datix.coresystem_poc.entities.WallboxOwner;
+import com.datix.coresystem_poc.entity.WallboxOwner;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

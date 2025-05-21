@@ -1,4 +1,4 @@
-package com.datix.coresystem_poc.entities;
+package com.datix.coresystem_poc.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
