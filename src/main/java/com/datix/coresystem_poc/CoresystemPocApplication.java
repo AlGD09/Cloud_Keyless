@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = "com.datix.coresystem_poc.repositories")
+@EnableJpaRepositories(basePackages = "com.datix.coresystem_poc.repository")
 public class CoresystemPocApplication {
 
     public static void main(String[] args) {
