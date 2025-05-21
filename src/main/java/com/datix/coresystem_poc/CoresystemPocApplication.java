@@ -45,7 +45,7 @@ public class CoresystemPocApplication {
             WallboxOwner owner = WallboxOwner.builder().name("Alice").build();
             ownerRepository.save(owner);
 
-            Wallbox wallbox = Wallbox.builder().physicalId(1).name("Wallbox 1").owner(owner).build();
+            Wallbox wallbox = Wallbox.builder().physicalId("1").name("Wallbox 1").owner(owner).build();
             wallboxRepository.save(wallbox);
 
             RentedWallbox rentedWallbox = RentedWallbox.builder()

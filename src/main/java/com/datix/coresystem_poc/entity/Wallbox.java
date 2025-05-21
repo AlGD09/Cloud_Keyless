@@ -26,7 +26,7 @@ public class Wallbox {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    private Integer physicalId;
+    private String physicalId;
 
     private String name;
 
