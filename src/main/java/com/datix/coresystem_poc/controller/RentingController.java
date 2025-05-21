@@ -1,7 +1,9 @@
 package com.datix.coresystem_poc.controller;
 
 import com.datix.coresystem_poc.dto.RentedWallboxRegistrationDTO;
+import com.datix.coresystem_poc.map.RentedWallboxMap;
 import com.datix.coresystem_poc.service.RentingService;
+import com.datix.coresystem_poc.service.SteveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,10 +20,15 @@ public class RentingController {
     @Autowired
     RentingService service;
 
+    @Autowired
+    SteveService steveService;
+
     @PostMapping
     public ResponseEntity<Void> registerRentedWallbox(@RequestBody RentedWallboxRegistrationDTO wallbox) {
         System.out.println(wallbox);
         service.registerRentedWallbox(wallbox);
+        steveService.triggerRemoteStart(RentedWallboxMap.toEntity(wallbox));
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -7,6 +7,18 @@ import com.datix.coresystem_poc.entity.WallboxOwner;
 public class WallboxMap {
 
     public static Wallbox toEntity(RentedWallboxRegistrationDTO wallboxDTO, WallboxOwner owner) {
-        return Wallbox.builder().physicalId(wallboxDTO.getWallboxId()).name(wallboxDTO.getOwnerName()).owner(owner).build();
+        return Wallbox.builder()
+                .physicalId(wallboxDTO.getWallboxId())
+                .name(wallboxDTO.getOwnerName())
+                .owner(owner)
+                .build();
+    }
+
+    public static Wallbox toEntity(RentedWallboxRegistrationDTO wallboxDTO) {
+        return Wallbox.builder()
+                .physicalId(wallboxDTO.getWallboxId())
+                .name(wallboxDTO.getOwnerName())
+                .owner(WallboxOwnerMap.toEntity(wallboxDTO))
+                .build();
     }
 }

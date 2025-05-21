@@ -14,4 +14,12 @@ public class RentedWallboxMap {
                 .build();
     }
 
+    public static RentedWallbox toEntity(RentedWallboxRegistrationDTO wallboxDTO) {
+        return RentedWallbox.builder()
+                .wallbox(WallboxMap.toEntity(wallboxDTO))
+                .startTime(wallboxDTO.getStartTime())
+                .endTime(wallboxDTO.getEndTime())
+                .build();
+    }
+
 }
