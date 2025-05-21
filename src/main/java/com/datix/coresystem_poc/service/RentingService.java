@@ -3,6 +3,7 @@ package com.datix.coresystem_poc.service;
 import com.datix.coresystem_poc.dto.RentedWallboxRegistrationDTO;
 import com.datix.coresystem_poc.entity.Wallbox;
 import com.datix.coresystem_poc.entity.WallboxOwner;
+import com.datix.coresystem_poc.map.RentedWallboxMap;
 import com.datix.coresystem_poc.map.WallboxMap;
 import com.datix.coresystem_poc.map.WallboxOwnerMap;
 import com.datix.coresystem_poc.repository.RentedWallboxRepository;
@@ -31,6 +32,6 @@ public class RentingService {
         Wallbox wallbox = wallboxRepository.findByName(wallboxDTO.getOwnerName())
                 .orElseGet(() -> wallboxRepository.save(WallboxMap.toEntity(wallboxDTO, owner)));
 
-//        rentedWallboxRepository.save(wallboxDTO);
+        rentedWallboxRepository.save(RentedWallboxMap.toEntity(wallboxDTO, wallbox));
     }
 }
