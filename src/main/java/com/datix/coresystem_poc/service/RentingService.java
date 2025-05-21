@@ -20,12 +20,8 @@ public class RentingService {
     WallboxOwnerRepository ownerRepository;
 
     public void registerRentedWallbox(RentedWallboxRegistrationDTO wallbox) {
-        AtomicReference<WallboxOwner> owner = null;
-        ownerRepository.findByName(wallbox.getOwnerName())
-                .ifPresentOrElse(
-                        foundOwner -> owner.set(foundOwner),
-                        () -> owner.set(
-                                ownerRepository.save(WallboxOwnerMap.toEntity(wallbox))));
+        WallboxOwner owner = ownerRepository.findByName(wallbox.getOwnerName())
+                .orElseGet(() -> ownerRepository.save(WallboxOwnerMap.toEntity(wallbox)));
 
 //        rentedWallboxRepository.save(wallbox);
     }
