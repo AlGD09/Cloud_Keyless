@@ -1,10 +1,13 @@
 package com.datix.coresystem_poc.service;
 
 import com.datix.coresystem_poc.dto.RentedWallboxRegistrationDTO;
+import com.datix.coresystem_poc.entity.Wallbox;
 import com.datix.coresystem_poc.entity.WallboxOwner;
+import com.datix.coresystem_poc.map.WallboxMap;
 import com.datix.coresystem_poc.map.WallboxOwnerMap;
 import com.datix.coresystem_poc.repository.RentedWallboxRepository;
 import com.datix.coresystem_poc.repository.WallboxOwnerRepository;
+import com.datix.coresystem_poc.repository.WallboxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +22,15 @@ public class RentingService {
     @Autowired
     WallboxOwnerRepository ownerRepository;
 
-    public void registerRentedWallbox(RentedWallboxRegistrationDTO wallbox) {
-        WallboxOwner owner = ownerRepository.findByName(wallbox.getOwnerName())
-                .orElseGet(() -> ownerRepository.save(WallboxOwnerMap.toEntity(wallbox)));
+    @Autowired
+    WallboxRepository wallboxRepository;
 
-//        rentedWallboxRepository.save(wallbox);
+    public void registerRentedWallbox(RentedWallboxRegistrationDTO wallboxDTO) {
+        WallboxOwner owner = ownerRepository.findByName(wallboxDTO.getOwnerName())
+                .orElseGet(() -> ownerRepository.save(WallboxOwnerMap.toEntity(wallboxDTO)));
+        Wallbox wallbox = wallboxRepository.findByName(wallboxDTO.getOwnerName())
+                .orElseGet(() -> wallboxRepository.save(WallboxMap.toEntity(wallboxDTO, owner)));
+
+//        rentedWallboxRepository.save(wallboxDTO);
     }
 }
