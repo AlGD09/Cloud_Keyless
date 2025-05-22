@@ -20,6 +20,7 @@ public class SteveService {
     private final String STEVE_URL = "http://localhost:8180";
     private final String STEVE_ELEKEY_PATH = "/steve/elekey";
 
+    private final String CHANGE_AVAILABILITY_PATH = "/ChangeAvailability";
     private final String REMOTE_START_PATH = "/RemoteStart";
     private final String REMOTE_STOP_PATH = "/RemoteStop";
 
@@ -30,6 +31,19 @@ public class SteveService {
     private final String ID_TAG_KEY = "idTag";
     private final String ID_TAG_VALUE = "42D8114A";
     private final String TRANSACTION_ID_KEY = "transactionId";
+    private final String AVAILABILITY_TYPE_KEY = "availType";
+    private final String AVAILABILITY_OPERATIVE_VALUE = "OPERATIVE";
+    private final String AVAILABILITY_INOPERATIVE_VALUE = "Inoperative";
+
+    public String turnOn(RentedWallbox rentedWallbox) {
+        ResponseEntity<String> response = steveRestTemplate.postForEntity(
+                STEVE_URL + STEVE_ELEKEY_PATH + CHANGE_AVAILABILITY_PATH,
+                createTurnOnRequest(rentedWallbox.getWallbox().getPhysicalId()),
+                String.class
+        );
+
+        return response.getBody();
+    }
 
     public String triggerRemoteStart(RentedWallbox rentedWallbox) {
         ResponseEntity<String> response = steveRestTemplate.postForEntity(
@@ -49,6 +63,15 @@ public class SteveService {
         );
 
         return response.getBody();
+    }
+
+    private HttpEntity<MultiValueMap<String, String>> createTurnOnRequest(String wallboxPhysicalId) {
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add(CHARGE_POINT_KEY, String.format(CHARGE_POINT_VALUE_FORMAT, wallboxPhysicalId));
+        body.add(CONNECTOR_ID_KEY, CONNECTOR_ID_VALUE);
+        body.add(AVAILABILITY_TYPE_KEY, AVAILABILITY_OPERATIVE_VALUE);
+
+        return new HttpEntity<>(body, createRequestHeader());
     }
 
     private HttpEntity<MultiValueMap<String, String>> createRemoteStartRequest(String wallboxPhysicalId) {
