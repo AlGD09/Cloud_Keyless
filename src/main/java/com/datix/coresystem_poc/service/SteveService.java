@@ -33,12 +33,22 @@ public class SteveService {
     private final String TRANSACTION_ID_KEY = "transactionId";
     private final String AVAILABILITY_TYPE_KEY = "availType";
     private final String AVAILABILITY_OPERATIVE_VALUE = "OPERATIVE";
-    private final String AVAILABILITY_INOPERATIVE_VALUE = "Inoperative";
+    private final String AVAILABILITY_INOPERATIVE_VALUE = "INOPERATIVE";
 
     public String turnOn(RentedWallbox rentedWallbox) {
         ResponseEntity<String> response = steveRestTemplate.postForEntity(
                 STEVE_URL + STEVE_ELEKEY_PATH + CHANGE_AVAILABILITY_PATH,
-                createTurnOnRequest(rentedWallbox.getWallbox().getPhysicalId()),
+                createChangeAvailabilityRequest(rentedWallbox.getWallbox().getPhysicalId(), AVAILABILITY_OPERATIVE_VALUE),
+                String.class
+        );
+
+        return response.getBody();
+    }
+
+    public String turnOff(RentedWallbox rentedWallbox) {
+        ResponseEntity<String> response = steveRestTemplate.postForEntity(
+                STEVE_URL + STEVE_ELEKEY_PATH + CHANGE_AVAILABILITY_PATH,
+                createChangeAvailabilityRequest(rentedWallbox.getWallbox().getPhysicalId(), AVAILABILITY_INOPERATIVE_VALUE),
                 String.class
         );
 
@@ -65,11 +75,11 @@ public class SteveService {
         return response.getBody();
     }
 
-    private HttpEntity<MultiValueMap<String, String>> createTurnOnRequest(String wallboxPhysicalId) {
+    private HttpEntity<MultiValueMap<String, String>> createChangeAvailabilityRequest(String wallboxPhysicalId, String availabilityType) {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add(CHARGE_POINT_KEY, String.format(CHARGE_POINT_VALUE_FORMAT, wallboxPhysicalId));
         body.add(CONNECTOR_ID_KEY, CONNECTOR_ID_VALUE);
-        body.add(AVAILABILITY_TYPE_KEY, AVAILABILITY_OPERATIVE_VALUE);
+        body.add(AVAILABILITY_TYPE_KEY, availabilityType);
 
         return new HttpEntity<>(body, createRequestHeader());
     }

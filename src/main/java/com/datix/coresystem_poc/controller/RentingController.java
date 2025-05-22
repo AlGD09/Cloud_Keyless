@@ -30,6 +30,7 @@ public class RentingController {
         steveService.triggerRemoteStart(RentedWallboxMap.toEntity(wallbox));
         steveService.triggerRemoteStop(RentedWallboxMap.toEntity(wallbox));
         steveService.turnOn(RentedWallboxMap.toEntity(wallbox));
+        steveService.turnOff(RentedWallboxMap.toEntity(wallbox));
 
 
         return new ResponseEntity<>(HttpStatus.OK);
