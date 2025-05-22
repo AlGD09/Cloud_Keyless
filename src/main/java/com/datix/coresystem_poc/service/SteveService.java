@@ -1,6 +1,5 @@
 package com.datix.coresystem_poc.service;
 
-import com.datix.coresystem_poc.entity.RentedWallbox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -35,40 +34,40 @@ public class SteveService {
     private final String AVAILABILITY_OPERATIVE_VALUE = "OPERATIVE";
     private final String AVAILABILITY_INOPERATIVE_VALUE = "INOPERATIVE";
 
-    public String turnOn(RentedWallbox rentedWallbox) {
+    public String turnOn(String rentedWallboxId) {
         ResponseEntity<String> response = steveRestTemplate.postForEntity(
                 STEVE_URL + STEVE_ELEKEY_PATH + CHANGE_AVAILABILITY_PATH,
-                createChangeAvailabilityRequest(rentedWallbox.getWallbox().getPhysicalId(), AVAILABILITY_OPERATIVE_VALUE),
+                createChangeAvailabilityRequest(rentedWallboxId, AVAILABILITY_OPERATIVE_VALUE),
                 String.class
         );
 
         return response.getBody();
     }
 
-    public String turnOff(RentedWallbox rentedWallbox) {
+    public String turnOff(String rentedWallboxId) {
         ResponseEntity<String> response = steveRestTemplate.postForEntity(
                 STEVE_URL + STEVE_ELEKEY_PATH + CHANGE_AVAILABILITY_PATH,
-                createChangeAvailabilityRequest(rentedWallbox.getWallbox().getPhysicalId(), AVAILABILITY_INOPERATIVE_VALUE),
+                createChangeAvailabilityRequest(rentedWallboxId, AVAILABILITY_INOPERATIVE_VALUE),
                 String.class
         );
 
         return response.getBody();
     }
 
-    public String triggerRemoteStart(RentedWallbox rentedWallbox) {
+    public String triggerRemoteStart(String rentedWallboxId) {
         ResponseEntity<String> response = steveRestTemplate.postForEntity(
                 STEVE_URL + STEVE_ELEKEY_PATH + REMOTE_START_PATH,
-                createRemoteStartRequest(rentedWallbox.getWallbox().getPhysicalId()),
+                createRemoteStartRequest(rentedWallboxId),
                 String.class
         );
 
         return response.getBody();
     }
 
-    public String triggerRemoteStop(RentedWallbox rentedWallbox) {
+    public String triggerRemoteStop(String rentedWallboxId) {
         ResponseEntity<String> response = steveRestTemplate.postForEntity(
                 STEVE_URL + STEVE_ELEKEY_PATH + REMOTE_STOP_PATH,
-                createRemoteStopRequest(rentedWallbox.getWallbox().getPhysicalId()),
+                createRemoteStopRequest(rentedWallboxId),
                 String.class
         );
 
