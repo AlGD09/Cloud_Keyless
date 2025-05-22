@@ -16,7 +16,7 @@ public class SteveService {
     @Autowired
     private RestTemplate steveRestTemplate;
 
-    private final String STEVE_URL = "http://localhost:8180";
+    private final String STEVE_URL = "http://host.docker.internal:8180";
     private final String STEVE_ELEKEY_PATH = "/steve/elekey";
 
     private final String CHANGE_AVAILABILITY_PATH = "/ChangeAvailability";
