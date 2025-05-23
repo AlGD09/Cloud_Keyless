@@ -17,18 +17,20 @@ public class SteveController {
     @Autowired
     SteveService service;
 
+    private Integer latestTransactionId = 0;
+
     private final String WALLBOX_PHYSICAL_ID = "ABL_10355221";
 
     @PostMapping("/remoteStart")
     public ResponseEntity<Void> triggerRemoteStart() {
-        service.triggerRemoteStart(WALLBOX_PHYSICAL_ID);
+       latestTransactionId = service.triggerRemoteStart(WALLBOX_PHYSICAL_ID);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/remoteStop")
     public ResponseEntity<Void> triggerRemoteStop() {
-        service.triggerRemoteStop(WALLBOX_PHYSICAL_ID);
+        service.triggerRemoteStop(WALLBOX_PHYSICAL_ID, latestTransactionId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
