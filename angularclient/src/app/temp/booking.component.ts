@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { Booking, dummyBookings } from '../model/booking';
 
 @Component({
   selector: 'app-booking',
@@ -24,7 +25,7 @@ export class BookingComponentGPT implements OnInit {
   wallboxes: Wallbox[] = [];
   selectedWallbox: any;
   selectedDate: Date = new Date();
-  bookings: any[] = [];
+  bookings: Booking[] = [];
   timeSlots: any[] = [];
   selectedSlots: Set<string> = new Set();
 
@@ -54,8 +55,8 @@ onDateChange(event: MatDatepickerInputEvent<Date>) {
 
   fetchBookings() {
     // this.wallboxService.getBookings(this.selectedWallbox.id).subscribe(data => {
-    //   this.bookings = data;
-    //   this.generateSlots();
+      this.bookings = dummyBookings;
+      this.generateSlots();
     // });
   }
 
