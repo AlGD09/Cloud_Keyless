@@ -19,7 +19,7 @@
         (change)="onWallboxChange(selectedWallbox.id)"
       >
         <option *ngFor="let wallbox of wallboxes" [ngValue]="wallbox">
-          {{ wallbox.name }}
+          {{ wallbox.owner.name + ' - ' + wallbox.name }}
         </option>
       </select>
     </div>
