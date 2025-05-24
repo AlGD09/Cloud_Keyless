@@ -1,17 +1,27 @@
 .booking-container {
   display: flex;
+  height: 88vh;
+  gap: 20px;
+  overflow: hidden; /* Prevent scroll bleed */
 }
+
 
 .left-side {
   width: 250px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 10px;
+  border-right: 2px solid #ccc;
+  padding: 10px;
+  flex-shrink: 0; /* Prevent shrinking */
+  overflow: hidden; /* Prevent scrolling */
 }
-
 
 .time-grid {
   flex-grow: 1;
+  overflow-y: auto; /* Make only this side scrollable */
+  padding: 10px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2px;
