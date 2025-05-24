@@ -10,6 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { Booking, dummyBookings } from '../model/booking';
+import { MatDividerModule } from '@angular/material/divider';
+
 
 @Component({
   selector: 'app-booking',
@@ -17,7 +19,8 @@ import { Booking, dummyBookings } from '../model/booking';
   imports: [CommonModule, FormsModule, MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
-    MatNativeDateModule],
+    MatNativeDateModule,
+  MatDividerModule],
   templateUrl: './booking.component.html',
   styleUrls: ['./booking.component.scss']
 })
