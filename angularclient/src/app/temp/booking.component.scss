@@ -1,0 +1,21 @@
+.time-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+}
+
+.time-grid div {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #0000ff;
+  cursor: pointer;
+}
+
+.booked {
+  background-color: #ff4d4d;
+  pointer-events: none;
+}
+
+.selected {
+  background-color: #ffc107;
+}
