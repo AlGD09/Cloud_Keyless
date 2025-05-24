@@ -42,17 +42,24 @@ public class CoresystemPocApplication {
     CommandLineRunner initialObjects(WallboxOwnerRepository ownerRepository, WallboxRepository wallboxRepository,
                                      RentedWallboxRepository rentedWallboxRepository) {
         return args -> {
-            WallboxOwner owner = WallboxOwner.builder().name("Alice").build();
+            WallboxOwner owner = WallboxOwner.builder().name("Heim").build();
             ownerRepository.save(owner);
 
             Wallbox wallbox = Wallbox.builder().physicalId("1").name("Wallbox 1").owner(owner).build();
+            Wallbox wallbox2 = Wallbox.builder().physicalId("2").name("Wallbox 2").owner(owner).build();
             wallboxRepository.save(wallbox);
+            wallboxRepository.save(wallbox2);
 
             RentedWallbox rentedWallbox = RentedWallbox.builder()
                     .wallbox(wallbox)
                     .startTime(LocalDateTime.now())
                     .endTime(LocalDateTime.now().plusDays(1)).build();
+            RentedWallbox rentedWallbox2 = RentedWallbox.builder()
+                    .wallbox(wallbox2)
+                    .startTime(LocalDateTime.now().plusHours(12))
+                    .endTime(LocalDateTime.now().plusDays(1).plusHours(12)).build();
             rentedWallboxRepository.save(rentedWallbox);
+            rentedWallboxRepository.save(rentedWallbox2);
             rentedWallboxRepository.findAll().forEach(System.out::println);
         };
     }
