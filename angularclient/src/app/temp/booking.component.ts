@@ -64,10 +64,11 @@ onDateChange(event: MatDatepickerInputEvent<Date>) {
   this.fetchBookings();  // <-- trigger bookings reload and slots update
 }
 
-  onWallboxChange(wallboxId: number) {
-    this.selectedWallbox = this.wallboxes.find(w => w.id === wallboxId);
-    this.fetchBookings();
-  }
+onWallboxChange(wallboxId: number) {
+  this.selectedWallbox = this.wallboxes.find(w => w.id === wallboxId);
+  this.selectedSlots.clear();  // <-- clear previous selections here
+  this.fetchBookings();
+}
 
   fetchBookings() {
     // this.wallboxService.getBookings(this.selectedWallbox.id).subscribe(data => {
