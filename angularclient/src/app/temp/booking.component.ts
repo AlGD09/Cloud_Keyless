@@ -31,6 +31,7 @@ export class BookingComponentGPT implements OnInit {
   bookings: Booking[] = [];
   timeSlots: any[] = [];
   selectedSlots: Set<string> = new Set();
+  rentedWallboxes: RentedWallbox[] = [];
 
   constructor(private wallboxService: WallboxService) {}
 
@@ -38,13 +39,14 @@ export class BookingComponentGPT implements OnInit {
     this.loadWallboxes();
   }
 
-  loadWallboxes() {
-    this.wallboxService.findAllRented().subscribe(rentedWallboxes => {
-      this.wallboxes = rentedWallboxes.map(rw => rw.wallbox);
-      this.selectedWallbox = this.wallboxes[0];
-      this.fetchBookings();
-    });
-  }
+loadWallboxes() {
+  this.wallboxService.findAllRented().subscribe(rentedWallboxes => {
+    this.rentedWallboxes = rentedWallboxes;
+    this.wallboxes = rentedWallboxes.map(rw => rw.wallbox);
+    this.selectedWallbox = this.wallboxes[0];
+    this.fetchBookings();
+  });
+}
 
 onDateChange(event: MatDatepickerInputEvent<Date>) {
   const selected = event.value;
@@ -63,21 +65,38 @@ onDateChange(event: MatDatepickerInputEvent<Date>) {
     // });
   }
 
-  generateSlots() {
-    const slots = [];
-    const dayStart = startOfDay(this.selectedDate);
-    for (let hour = 0; hour <= 23; hour++) {
-      for (let min of [0, 15, 30, 45]) {
-        const slotStart = new Date(this.selectedDate.setHours(hour, min, 0, 0));
-        const slotKey = slotStart.toISOString();
-        const booked = this.bookings.some(booking =>
-          new Date(booking.startTime) <= slotStart && new Date(booking.endTime) > slotStart
-        );
-        slots.push({ time: slotStart, key: slotKey, booked });
-      }
-    }
-    this.timeSlots = slots;
+generateSlots() {
+  const slots = [];
+  const rentalPeriod = this.getRentalPeriod();
+
+  if (!rentalPeriod) {
+    this.timeSlots = [];
+    return;
   }
+
+  const { start, end } = rentalPeriod;
+
+  for (let hour = 0; hour <= 23; hour++) {
+    for (let min of [0, 15, 30, 45]) {
+      const slotStart = new Date(this.selectedDate);
+      slotStart.setHours(hour, min, 0, 0);
+
+      if (slotStart < start || slotStart >= end) {
+        continue; // skip slots outside rental period
+      }
+
+      const slotKey = slotStart.toISOString();
+
+      const booked = this.bookings.some(booking =>
+        new Date(booking.startTime) <= slotStart && new Date(booking.endTime) > slotStart
+      );
+
+      slots.push({ time: slotStart, key: slotKey, booked });
+    }
+  }
+  this.timeSlots = slots;
+}
+
 
   toggleSlot(slot: any) {
     if (slot.booked) return;
@@ -109,5 +128,15 @@ onDateChange(event: MatDatepickerInputEvent<Date>) {
   const start = new Date(sorted[0]);
   const end = new Date(sorted[sorted.length - 1]);
   return `${start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+}
+
+getRentalPeriod() {
+  if (!this.selectedWallbox) return null;
+  const rented = this.rentedWallboxes.find(rw => rw.wallbox.id === this.selectedWallbox.id);
+  if (!rented) return null;
+  return {
+    start: new Date(rented.startTime),
+    end: new Date(rented.endTime)
+  };
 }
 }
