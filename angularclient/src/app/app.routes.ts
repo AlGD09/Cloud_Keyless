@@ -8,6 +8,7 @@ import { ChargingComponent } from './components/charging/charging.component';
 export const routes: Routes = [
   { path: 'users', component: UserListComponent },
   { path: 'adduser', component: UserFormComponent },
+  { path: '', redirectTo: 'buchen', pathMatch: 'full' },
   { path: 'buchen', component: BookingComponent },
     { path: 'laden', component: ChargingComponent },
 ];
