@@ -66,7 +66,7 @@ onDateChange(event: MatDatepickerInputEvent<Date>) {
   generateSlots() {
     const slots = [];
     const dayStart = startOfDay(this.selectedDate);
-    for (let hour = 7; hour <= 13; hour++) {
+    for (let hour = 0; hour <= 23; hour++) {
       for (let min of [0, 15, 30, 45]) {
         const slotStart = new Date(this.selectedDate.setHours(hour, min, 0, 0));
         const slotKey = slotStart.toISOString();
