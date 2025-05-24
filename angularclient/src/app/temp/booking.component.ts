@@ -59,7 +59,9 @@ getGridColumn(slot: any): number {
 
 onDateChange(event: MatDatepickerInputEvent<Date>) {
   const selected = event.value;
-  console.log('Selected date:', selected);
+  if (!selected) return; // handle null/undefined
+  this.selectedDate = selected;
+  this.fetchBookings();  // <-- trigger bookings reload and slots update
 }
 
   onWallboxChange(wallboxId: number) {
