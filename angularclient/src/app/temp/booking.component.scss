@@ -1,6 +1,6 @@
 .booking-container {
   display: flex;
-  height: 88vh;
+  height: calc(100vh - 60px);
   gap: 20px;
   overflow: hidden; /* Prevent scroll bleed */
 }
