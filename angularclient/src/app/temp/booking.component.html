@@ -29,15 +29,13 @@
 
   <mat-divider class="vertical-divider" vertical></mat-divider>
 
-    <div class="time-grid">
-    <div *ngFor="let slot of timeSlots"
-         [ngClass]="{
-           'booked': slot.booked,
-           'selected': isSelected(slot.key)
-         }"
-         (click)="toggleSlot(slot)">
-      {{ slot.time | date: 'HH:mm' }}
-    </div>
+<div class="time-grid" [style.gridTemplateColumns]="'repeat(' + (60 / slotDurationMinutes) + ', 1fr)'">
+  <div *ngFor="let slot of timeSlots"
+       [ngClass]="{'booked': slot.booked, 'selected': isSelected(slot.key)}"
+       [style.gridColumn]="getGridColumn(slot)"
+       (click)="toggleSlot(slot)">
+    {{ slot.time | date: 'HH:mm' }}
   </div>
+</div>
 
 </div>
