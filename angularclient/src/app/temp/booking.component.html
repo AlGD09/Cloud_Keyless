@@ -1,4 +1,6 @@
 <div class="booking-container">
+
+  <div class="left-side">
   <select [(ngModel)]="selectedWallbox" (change)="onWallboxChange(selectedWallbox.id)">
     <option *ngFor="let wallbox of wallboxes" [ngValue]="wallbox">{{ wallbox.name }}</option>
   </select>
@@ -15,8 +17,16 @@
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker #picker></mat-datepicker>
 </mat-form-field>
-b
-  <div class="time-grid">
+
+  <div>
+    Slots selected:
+  <strong *ngIf="selectedSlots.size > 0">{{ getSelectedSlotRange() }}</strong>
+  </div>
+
+  <button (click)="confirmBooking()">Confirm booking</button>
+  </div>
+
+    <div class="time-grid">
     <div *ngFor="let slot of timeSlots"
          [ngClass]="{
            'booked': slot.booked,
@@ -27,10 +37,4 @@ b
     </div>
   </div>
 
-  <div>
-    Slots selected:
-  <strong *ngIf="selectedSlots.size > 0">{{ getSelectedSlotRange() }}</strong>
-  </div>
-
-  <button (click)="confirmBooking()">Confirm booking</button>
 </div>

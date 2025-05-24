@@ -1,4 +1,17 @@
+.booking-container {
+  display: flex;
+}
+
+.left-side {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
 .time-grid {
+  flex-grow: 1;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2px;
