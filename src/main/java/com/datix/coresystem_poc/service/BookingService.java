@@ -29,6 +29,10 @@ public class BookingService {
     @Autowired
     RentedWallboxRepository rentedWallboxRepository;
 
+    public List<Booking> getBookings() {
+        return bookingRepository.findAll();
+    }
+
     public Booking registerBooking(BookingRegistrationDTO bookingDTO) {
         User user = userRepository.findById(bookingDTO.getBookingUserId())
                 .orElseThrow();

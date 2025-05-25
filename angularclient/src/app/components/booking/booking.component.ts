@@ -11,6 +11,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { Booking, dummyBookings } from '../../model/booking';
 import { MatDividerModule } from '@angular/material/divider';
+import { BookingService } from '../../services/booking.service';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class BookingComponent implements OnInit {
   selectedSlots: Set<string> = new Set();
   rentedWallboxes: RentedWallbox[] = [];
 
-  constructor(private wallboxService: RentedWallboxService) {}
+  constructor(private wallboxService: RentedWallboxService, private bookingService: BookingService) {}
 
   slotDurationMinutes = 3;
   columns = 60 / this.slotDurationMinutes;
@@ -71,10 +72,10 @@ onWallboxChange(wallboxId: number) {
 }
 
   fetchBookings() {
-    // this.wallboxService.getBookings(this.selectedWallbox.id).subscribe(data => {
-      this.bookings = dummyBookings;
+    this.bookingService.findAllBookins().subscribe(bookings => {
+      this.bookings = bookings;
       this.generateSlots();
-    // });
+    });
   }
 
 generateSlots() {
