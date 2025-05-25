@@ -1,7 +1,7 @@
 import { Wallbox, RentedWallbox } from '../../model/wallbox';
 import { Component, OnInit } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { WallboxService } from '../../services/wallbox.service';
+import { RentedWallboxService } from '../../services/rentedWallbox.service';
 import { addMinutes, format, startOfDay } from 'date-fns';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -33,7 +33,7 @@ export class BookingComponent implements OnInit {
   selectedSlots: Set<string> = new Set();
   rentedWallboxes: RentedWallbox[] = [];
 
-  constructor(private wallboxService: WallboxService) {}
+  constructor(private wallboxService: RentedWallboxService) {}
 
   slotDurationMinutes = 3;
   columns = 60 / this.slotDurationMinutes;
