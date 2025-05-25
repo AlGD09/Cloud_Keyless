@@ -8,7 +8,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class BookingCheckerJob {
@@ -16,26 +19,54 @@ public class BookingCheckerJob {
     @Autowired
     BookingRepository bookingRepository;
 
+    private static Set<Booking> activeBookings = new HashSet<>();
+
     @Scheduled(cron = "0 * * * * ?") // every minute at 0 seconds
     public void checkCurrentBookings() {
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime utcNow = LocalDateTime.now(ZoneOffset.UTC);
         List<Booking> bookings = bookingRepository.findAll();
 
-        System.out.println("Scheduled task running every minute - " + now);
+        System.out.println("Scheduled task running every minute - " + utcNow);
 
 
-//        for (Booking booking : bookings) {
-//            for (BookedTimeSlot slot : booking.getBookedSlots()) {
-//                if (slot.getStartTime() != null && slot.getEndTime() != null) {
-//                    boolean isActive = !now.isBefore(slot.getStartTime()) && now.isBefore(slot.getEndTime());
-//                    if (isActive) {
-//                        System.out.println("Active booking found: Booking ID " + booking.getId()
-//                                + " Slot ID " + slot.getId() + " Current time " + now);
-//                        // Add your logic here for active slots
-//                    }
-//                }
-//            }
-//        }
+        for (Booking booking : bookings) {
+
+            LocalDateTime bookingStartTime = findEarliestStartTime(booking.getBookedSlots());
+            LocalDateTime bookingEndTime = findLatestEndTime(booking.getBookedSlots());
+                if (bookingStartTime != null && bookingEndTime != null) {
+                    boolean isActive = !utcNow.isBefore(bookingStartTime) && utcNow.isBefore(bookingEndTime);
+                    if (isActive && activeBookings.add(booking)) {
+                        System.out.println(" Current UTC time " + utcNow + "; Activating booking with ID " + booking.getId()
+                                + "; Active until " + bookingEndTime);
+                        // Add your logic here for active slots
+                    }
+                }
+
+        }
+    }
+
+    private static LocalDateTime findEarliestStartTime(List<BookedTimeSlot> slots) {
+        if (slots == null || slots.isEmpty()) {
+            return null;
+        }
+
+        return slots.stream()
+                .map(BookedTimeSlot::getStartTime)
+                .filter(time -> time != null)
+                .min(LocalDateTime::compareTo)
+                .orElse(null);
+    }
+
+    private static LocalDateTime findLatestEndTime(List<BookedTimeSlot> slots) {
+        if (slots == null || slots.isEmpty()) {
+            return null;
+        }
+
+        return slots.stream()
+                .map(BookedTimeSlot::getEndTime)
+                .filter(time -> time != null)
+                .max(LocalDateTime::compareTo)
+                .orElse(null);
     }
 }
 
