@@ -9,7 +9,7 @@ export class ChargingService {
   private steveControllerUrl: string;
 
   constructor(private http: HttpClient) {
-    this.steveControllerUrl = 'http://localhost:8080/steve';
+    this.steveControllerUrl = 'http://localhost:8080/api/steve';
   }
 
   public turnOn(): void {

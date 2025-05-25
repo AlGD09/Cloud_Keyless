@@ -1,6 +1,9 @@
 spring:
   application:
     name: coresystem-poc
+  mvc:
+    servlet:
+      path: /api
   h2:
     console.enabled: true
   datasource:
