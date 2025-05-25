@@ -39,6 +39,10 @@ public class BookingService {
         return bookingRepository.findAll();
     }
 
+    public Integer getTimeSlotLength() {
+        return timeSlotConfig.getLength();
+    }
+
     public Booking registerBooking(BookingRegistrationDTO bookingDTO) {
         User user = userRepository.findById(bookingDTO.getBookingUserId())
                 .orElseThrow();

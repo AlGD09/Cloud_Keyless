@@ -18,6 +18,10 @@ export class BookingService {
       return this.http.get<Booking[]>(this.bookingUrl);
     }
 
+    public getTimeSlotLength(): Observable<any> {
+      return this.http.get<{timeSlotLength: number}>(this.bookingUrl + "/time-slot-length");
+    }
+
 
 public registerBooking(booking: BookingRegister): Observable<any> {
   return this.http.post(this.bookingUrl, booking);

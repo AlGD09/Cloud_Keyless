@@ -29,6 +29,11 @@ public class BookingController {
         return  service.getBookings();
     }
 
+    @GetMapping("/time-slot-length")
+    public ResponseEntity<Integer> getTimeSlotLength() {
+        return new ResponseEntity<>(service.getTimeSlotLength() ,HttpStatus.OK);
+    }
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> registerBooking(@RequestBody BookingRegistrationDTO bookingDTO) {
         Booking booking = service.registerBooking(bookingDTO);

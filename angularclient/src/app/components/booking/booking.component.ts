@@ -13,6 +13,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { Booking } from '../../model/booking';
 import { MatDividerModule } from '@angular/material/divider';
 import { BookingService } from '../../services/booking.service';
+import { firstValueFrom } from 'rxjs';
 
 
 @Component({
@@ -35,13 +36,17 @@ export class BookingComponent implements OnInit {
   selectedSlots: Set<string> = new Set();
   rentedWallboxes: RentedWallbox[] = [];
 
-  constructor(private wallboxService: RentedWallboxService, private bookingService: BookingService) {}
-
-  slotDurationMinutes = 6;
+  slotDurationMinutes = 15;
   columns = 60 / this.slotDurationMinutes;
 
+  constructor(private wallboxService: RentedWallboxService, private bookingService: BookingService) {}
 
-  ngOnInit() {
+
+  async ngOnInit() {
+  const response = await firstValueFrom(this.bookingService.getTimeSlotLength());
+  this.slotDurationMinutes = response;
+  this.columns = 60 / this.slotDurationMinutes;
+
     this.loadWallboxes();
   }
 
