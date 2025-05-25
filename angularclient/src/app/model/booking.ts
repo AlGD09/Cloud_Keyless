@@ -1,4 +1,7 @@
-export interface Booking {
+import { User } from "./user/user";
+import { RentedWallbox } from "./wallbox";
+
+export interface BookingRegister {
   id: number;
   userId: number;
   wallboxId: number;
@@ -6,26 +9,21 @@ export interface Booking {
   endTime: Date;
 }
 
-export const dummyBookings: Booking[] = [
-  {
-    id: 1,
-    userId: 101,
-    wallboxId: 1,
-    startTime: new Date('2025-05-22T10:00:00Z'),
-    endTime: new Date('2025-05-22T11:00:00Z')
-  },
-  {
-    id: 2,
-    userId: 102,
-    wallboxId: 1,
-    startTime: new Date('2025-05-22T12:30:00Z'),
-    endTime: new Date('2025-05-22T13:30:00Z')
-  },
-  {
-    id: 3,
-    userId: 103,
-    wallboxId: 2,
-    startTime: new Date('2025-05-22T09:00:00Z'),
-    endTime: new Date('2025-05-22T10:15:00Z')
-  }
-];
+export interface Booking {
+  id: number;
+  rentedWallbox: RentedWallbox;
+  bookingUser: User;
+  bookedSlots: BookedTimeSlot[];
+}
+
+export interface BookedTimeSlot {
+    id: number;
+    startTime: Date;
+    endTime: Date;
+}
+
+export interface TimeSlot {
+    startTime: Date;
+    endTime: Date;
+    bookingUser: User;
+}

@@ -9,7 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { Booking, dummyBookings } from '../../model/booking';
+import { Booking } from '../../model/booking';
 import { MatDividerModule } from '@angular/material/divider';
 import { BookingService } from '../../services/booking.service';
 
@@ -101,11 +101,11 @@ generateSlots() {
     if (slotStart >= start && slotStart < end) {
       const slotKey = slotStart.toISOString();
 
-      const booked = this.bookings.some(booking =>
-        new Date(booking.startTime) <= slotStart && new Date(booking.endTime) > slotStart
-      );
+      // const booked = this.bookings.some(booking =>
+      //   new Date(booking.startTime) <= slotStart && new Date(booking.endTime) > slotStart
+      // );
 
-      slots.push({ time: new Date(slotStart), key: slotKey, booked });
+      slots.push({ time: new Date(slotStart), key: slotKey });
     }
 
     // increment by slot duration

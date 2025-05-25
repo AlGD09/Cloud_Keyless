@@ -1,16 +1,15 @@
 package com.datix.coresystem_poc.dto;
 
-import com.datix.coresystem_poc.entity.BookedTimeSlot;
-
 import lombok.Value;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Value
 public class BookingRegistrationDTO {
 
     private Long rentedWallboxId;
     private Long bookingUserId;
-    private List<BookedTimeSlot> bookedSlots;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
 }
