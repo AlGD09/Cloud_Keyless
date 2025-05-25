@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Booking } from '../model/booking';
+import { Booking, BookingRegister } from '../model/booking';
 import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
@@ -17,5 +17,11 @@ export class BookingService {
     public findAllBookins(): Observable<Booking[]> {
       return this.http.get<Booking[]>(this.bookingUrl);
     }
+
+
+public registerBooking(booking: BookingRegister): Observable<any> {
+  return this.http.post(this.bookingUrl, booking);
+}
+
   }
 

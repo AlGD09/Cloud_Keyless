@@ -1,3 +1,4 @@
+import { BookingRegister } from './../../model/booking';
 import { Wallbox, RentedWallbox } from '../../model/wallbox';
 import { Component, OnInit } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -36,7 +37,7 @@ export class BookingComponent implements OnInit {
 
   constructor(private wallboxService: RentedWallboxService, private bookingService: BookingService) {}
 
-  slotDurationMinutes = 3;
+  slotDurationMinutes = 6;
   columns = 60 / this.slotDurationMinutes;
 
 
@@ -127,16 +128,30 @@ generateSlots() {
   }
 
 confirmBooking() {
-  // const sorted = Array.from(this.selectedSlots).sort();
-  // if (sorted.length === 0) return;
+  const sorted = Array.from(this.selectedSlots).sort();
+  if (sorted.length === 0) return;
 
-  // const start = new Date(sorted[0]);
-  // const end = addMinutes(new Date(sorted[sorted.length - 1]), this.slotDurationMinutes);
+  const start = new Date(sorted[0]);
+  const end = addMinutes(new Date(sorted[sorted.length - 1]), this.slotDurationMinutes);
 
-  // this.wallboxService.bookSlot(this.selectedWallbox.id, start, end).subscribe(() => {
-  //   this.selectedSlots.clear();
-  //   this.fetchBookings();
-  // });
+const booking: BookingRegister = {
+  bookingUserId: 1,
+  rentedWallboxId: this.selectedWallbox.id,
+  startTime: start,
+  endTime: end
+}
+
+console.log(booking)
+
+this.bookingService.registerBooking(booking).subscribe({
+  next: () => {
+    this.selectedSlots.clear();
+    this.fetchBookings();
+  },
+  error: err => {
+    console.error('Booking failed:', err);
+  }
+})
 }
 
 

@@ -21,6 +21,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -64,14 +65,16 @@ public class CoresystemPocApplication {
             wallboxRepository.save(wallbox);
             wallboxRepository.save(wallbox2);
 
+            LocalDateTime now = LocalDateTime.now().truncatedTo(ChronoUnit.HOURS);
+
             RentedWallbox rentedWallbox = RentedWallbox.builder()
                     .wallbox(wallbox)
-                    .startTime(LocalDateTime.now())
-                    .endTime(LocalDateTime.now().plusDays(1)).build();
+                    .startTime(now.plusMinutes(timeSlotConfig.getLength()))
+                    .endTime(now.plusDays(1)).build();
             RentedWallbox rentedWallbox2 = RentedWallbox.builder()
                     .wallbox(wallbox2)
-                    .startTime(LocalDateTime.now().plusHours(12))
-                    .endTime(LocalDateTime.now().plusDays(1).plusHours(12)).build();
+                    .startTime(now.plusHours(12).plusMinutes(timeSlotConfig.getLength() * 3))
+                    .endTime(now.plusDays(1).plusHours(12)).build();
             rentedWallboxRepository.save(rentedWallbox);
             rentedWallboxRepository.save(rentedWallbox2);
             rentedWallboxRepository.findAll().forEach(System.out::println);

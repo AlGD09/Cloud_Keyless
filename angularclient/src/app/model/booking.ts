@@ -2,9 +2,8 @@ import { User } from "./user/user";
 import { RentedWallbox } from "./wallbox";
 
 export interface BookingRegister {
-  id: number;
-  userId: number;
-  wallboxId: number;
+  bookingUserId: number;
+  rentedWallboxId: number;
   startTime: Date;
   endTime: Date;
 }
