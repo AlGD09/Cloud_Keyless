@@ -32,10 +32,10 @@ public class Booking {
     private long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private RentedWallbox wallbox;
+    private RentedWallbox rentedWallbox;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private User bookingOwner;
+    private User bookingUser;
 
     @OneToMany(fetch = FetchType.EAGER)
     private List<BookedTimeSlot> bookedSlots;

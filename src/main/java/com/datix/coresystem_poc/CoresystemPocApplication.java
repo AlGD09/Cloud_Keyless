@@ -20,7 +20,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import java.awt.print.Book;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Stream;
@@ -90,8 +89,8 @@ public class CoresystemPocApplication {
                     .build();
 
             Booking booking = Booking.builder()
-                    .wallbox(rentedWallbox)
-                    .bookingOwner(user)
+                    .rentedWallbox(rentedWallbox)
+                    .bookingUser(user)
                     .bookedSlots(List.of(slot))
                     .pingInterval(pingConfig.getInterval())
                     .build();
