@@ -1,0 +1,21 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Booking } from '../model/booking';
+import { Observable } from 'rxjs/internal/Observable';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class BookingService {
+
+    private bookingUrl: string;
+
+    constructor(private http: HttpClient) {
+      this.bookingUrl = 'http://localhost:8080/api/bookings';
+    }
+
+    public findAllBookins(): Observable<Booking[]> {
+      return this.http.get<Booking[]>(this.bookingUrl);
+    }
+  }
+
