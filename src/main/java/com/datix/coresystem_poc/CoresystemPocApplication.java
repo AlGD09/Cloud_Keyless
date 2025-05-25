@@ -1,5 +1,7 @@
 package com.datix.coresystem_poc;
 
+import com.datix.coresystem_poc.config.PingConfig;
+import com.datix.coresystem_poc.config.TimeSlotConfig;
 import com.datix.coresystem_poc.entity.BookedTimeSlot;
 import com.datix.coresystem_poc.entity.Booking;
 import com.datix.coresystem_poc.entity.RentedWallbox;
@@ -50,7 +52,9 @@ public class CoresystemPocApplication {
                                      RentedWallboxRepository rentedWallboxRepository,
                                      BookingRepository bookingRepository,
                                      BookedTimeSlotRepository bookedTimeSlotRepository,
-                                     UserRepository userRepository
+                                     UserRepository userRepository,
+                                     TimeSlotConfig timeSlotConfig,
+                                     PingConfig pingConfig
     ) {
         return args -> {
             WallboxOwner owner = WallboxOwner.builder().name("Heim").build();
@@ -89,8 +93,10 @@ public class CoresystemPocApplication {
                     .wallbox(rentedWallbox)
                     .bookingOwner(user)
                     .bookedSlots(List.of(slot))
-                    .pingInterval(6)
+                    .pingInterval(pingConfig.getInterval())
                     .build();
+
+            System.out.println(booking);
 
             bookedTimeSlotRepository.save(slot);
             bookingRepository.save(booking);
