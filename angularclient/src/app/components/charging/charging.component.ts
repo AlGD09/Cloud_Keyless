@@ -59,7 +59,7 @@ loadWallboxes() {
     });
   }
 
-  get buttonLabel(): string {
+  get label(): string {
     if (!this.upcomingBooking) {
       return 'You have no upcoming booking!';
     }
@@ -70,10 +70,14 @@ loadWallboxes() {
     }
 
     if (now >= new Date(this.upcomingBooking.startTime) && now <= new Date(this.upcomingBooking.endTime)) {
-      return this.clickCount % 2 === 0 ? 'I\'m at the booked wallbox' : 'I left the booked wallbox';
+      return `Your booking ends at ${format(new Date(this.upcomingBooking.endTime), 'HH:mm')}`;
     }
 
     return 'You have no upcoming booking!';
+  }
+
+    get buttonLabel(): string {
+      return this.clickCount % 2 === 0 ? 'I\'m at the booked wallbox' : 'I left the booked wallbox';
   }
 
   handleClick() {
@@ -83,6 +87,8 @@ loadWallboxes() {
     } else {
       this.onOddClick();
     }
+    this.isAtWallbox = !this.isAtWallbox;
+
   }
 
   onEvenClick() {

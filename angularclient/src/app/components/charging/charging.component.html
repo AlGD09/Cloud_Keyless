@@ -15,16 +15,20 @@
 
   <!-- If there's an upcoming booking -->
   <div *ngIf="upcomingBooking">
-    <h2>{{ buttonLabel }}</h2>
+    <h2>{{ label }}</h2>
 
-    <!-- Show button only during active booking -->
-    <button *ngIf="isBookingActive" (click)="handleClick()">
-      {{ buttonLabel }}
-    </button>
+<!-- Show button only during active booking -->
+<div *ngIf="isBookingActive">
+  <button (click)="handleClick()">
+    {{ buttonLabel }}
+  </button>
+</div>
 
-    <!-- Show charging control if at wallbox -->
-    <button *ngIf="isAtWallbox" (click)="toggleCharging()">
-      {{ isCharging ? 'Stop charging' : 'Charge' }}
-    </button>
+<!-- Show charging control if at wallbox -->
+<div *ngIf="isAtWallbox">
+  <button (click)="toggleCharging()">
+    {{ isCharging ? 'Stop charging' : 'Charge' }}
+  </button>
+</div>
   </div>
 </div>
