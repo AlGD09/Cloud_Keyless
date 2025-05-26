@@ -1,0 +1,39 @@
+{
+  "transaction": {
+    "id": 14,
+    "connectorId": 1,
+    "chargeBoxPk": 1,
+    "ocppTagPk": 1,
+    "chargeBoxId": "ABL_10355221",
+    "ocppIdTag": "00000000000000",
+    "startValue": "624291",
+    "startTimestamp": "2025-05-26T12:01:32.000Z",
+    "stopValue": "624326",
+    "stopReason": "Other",
+    "stopTimestamp": "2025-05-26T12:07:37.000Z",
+    "stopEventActor": "station"
+  },
+  "values": [
+    {
+      "valueTimestamp": "2025-05-26T12:01:32.000Z",
+      "value": "624.29",
+      "readingContext": "Transaction.Begin",
+      "format": "Raw",
+      "measurand": "Energy.Active.Import.Register",
+      "location": "Outlet",
+      "unit": "kWh",
+      "phase": null
+    },
+    {
+      "valueTimestamp": "2025-05-26T12:07:37.000Z",
+      "value": "624.32",
+      "readingContext": "Transaction.End",
+      "format": "Raw",
+      "measurand": "Energy.Active.Import.Register",
+      "location": "Outlet",
+      "unit": "kWh",
+      "phase": null
+    }
+  ],
+  "nextTransactionStart": null
+}
