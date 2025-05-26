@@ -16,8 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -46,10 +46,18 @@ public class BookingService {
 
     public ResponseEntity<UpcomingBooking> getUpcomingBooking(String username, Long wallboxId) {
         List<Booking> bookings = bookingRepository.findByBookingUserNameAndRentedWallbox_Wallbox_Id(username, wallboxId);
+        LocalDateTime now = LocalDateTime.now(ZoneOffset.UTC);
 
         Optional<Booking> optionalBooking = bookings.stream()
-                // Map each booking to its earliest slot start time, paired with the booking itself
                 .filter(b -> b.getBookedSlots() != null && !b.getBookedSlots().isEmpty())
+                // Only consider bookings where latest endTime is after now
+                .filter(b -> b.getBookedSlots().stream()
+                        .map(BookedTimeSlot::getEndTime)
+                        .max(LocalDateTime::compareTo)
+                        .orElse(LocalDateTime.MIN)
+                        .isAfter(now)
+                )
+                // Get booking with earliest startTime
                 .min(Comparator.comparing(b -> b.getBookedSlots().stream()
                         .map(BookedTimeSlot::getStartTime)
                         .min(LocalDateTime::compareTo)
