@@ -8,6 +8,7 @@ export interface Wallbox {
 }
 
 export interface RentedWallbox {
+    id: number;
     wallbox: Wallbox;
     startTime: Date;
     endTime: Date;

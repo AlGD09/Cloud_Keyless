@@ -78,7 +78,7 @@ onWallboxChange(wallboxId: number) {
 }
 
   fetchBookings() {
-    this.bookingService.findAllBookins().subscribe(bookings => {
+    this.bookingService.findAllBookings().subscribe(bookings => {
       this.bookings = bookings;
       this.generateSlots();
     });

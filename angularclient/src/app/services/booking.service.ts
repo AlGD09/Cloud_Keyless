@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Booking, BookingRegister } from '../model/booking';
+import { Booking, BookingRegister, UpcomingBooking } from '../model/booking';
 import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
@@ -14,9 +14,13 @@ export class BookingService {
       this.bookingUrl = 'http://localhost:8080/api/bookings';
     }
 
-    public findAllBookins(): Observable<Booking[]> {
+    public findAllBookings(): Observable<Booking[]> {
       return this.http.get<Booking[]>(this.bookingUrl);
     }
+
+      getUpcomingBooking(userId: string, wallboxId: number): Observable<UpcomingBooking> {
+    return this.http.get<UpcomingBooking>(`${this.bookingUrl}/upcoming/${userId}/${wallboxId}`);
+  }
 
     public getTimeSlotLength(): Observable<any> {
       return this.http.get<{timeSlotLength: number}>(this.bookingUrl + "/time-slot-length");
@@ -25,6 +29,7 @@ export class BookingService {
 
 public registerBooking(booking: BookingRegister): Observable<any> {
   return this.http.post(this.bookingUrl, booking);
+
 }
 
   }

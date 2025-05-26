@@ -15,6 +15,12 @@ export interface Booking {
   bookedSlots: BookedTimeSlot[];
 }
 
+export interface UpcomingBooking {
+  booking: RentedWallbox;
+  startTime: Date;
+  endTime: Date;
+}
+
 export interface BookedTimeSlot {
     id: number;
     startTime: Date;
