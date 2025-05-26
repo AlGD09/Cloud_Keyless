@@ -30,7 +30,6 @@ public class BookingCheckerJob {
 
 
         for (Booking booking : bookings) {
-
             LocalDateTime bookingStartTime = findEarliestStartTime(booking.getBookedSlots());
             LocalDateTime bookingEndTime = findLatestEndTime(booking.getBookedSlots());
                 if (bookingStartTime != null && bookingEndTime != null) {
@@ -41,8 +40,22 @@ public class BookingCheckerJob {
                         // Add your logic here for active slots
                     }
                 }
-
         }
+
+        if (!activeBookings.isEmpty()) {
+            Set<Booking> toRemove = new HashSet<>();
+
+            for (Booking activeBooking : activeBookings) {
+                LocalDateTime bookingEndTime = findLatestEndTime(activeBooking.getBookedSlots());
+                if (bookingEndTime != null && utcNow.isAfter(bookingEndTime)) {
+                    toRemove.add(activeBooking);
+                    System.out.println(" Current UTC time " + utcNow + "; Deactivating booking with ID " + activeBooking.getId());
+                }
+            }
+
+            activeBookings.removeAll(toRemove);
+        }
+
     }
 
     private static LocalDateTime findEarliestStartTime(List<BookedTimeSlot> slots) {

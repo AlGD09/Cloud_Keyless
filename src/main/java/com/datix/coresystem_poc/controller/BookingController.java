@@ -37,7 +37,7 @@ public class BookingController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> registerBooking(@RequestBody BookingRegistrationDTO bookingDTO) {
         Booking booking = service.registerBooking(bookingDTO);
-        System.out.println(booking);
+        System.out.println("Registering Booking:" + booking);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
