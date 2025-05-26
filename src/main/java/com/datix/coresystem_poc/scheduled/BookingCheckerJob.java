@@ -3,6 +3,7 @@ package com.datix.coresystem_poc.scheduled;
 import com.datix.coresystem_poc.entity.BookedTimeSlot;
 import com.datix.coresystem_poc.entity.Booking;
 import com.datix.coresystem_poc.repository.BookingRepository;
+import com.datix.coresystem_poc.service.SteveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,9 @@ public class BookingCheckerJob {
 
     @Autowired
     BookingRepository bookingRepository;
+
+    @Autowired
+    SteveService steveService;
 
     private static Set<Booking> activeBookings = new HashSet<>();
 
@@ -39,9 +43,9 @@ public class BookingCheckerJob {
             if (bookingStartTime != null && bookingEndTime != null) {
                 boolean isActive = !utcNow.isBefore(bookingStartTime) && utcNow.isBefore(bookingEndTime);
                 if (isActive && activeBookings.add(booking)) {
+                    steveService.turnOff(booking.getRentedWallbox().getWallbox().getPhysicalId());
                     System.out.println(" Current UTC time " + utcNow + "; Activating booking with ID " + booking.getId()
                             + "; Active until " + bookingEndTime);
-                    // Add your logic here for active slots
                 }
             }
         }
@@ -55,6 +59,7 @@ public class BookingCheckerJob {
                 LocalDateTime bookingEndTime = findLatestEndTime(activeBooking.getBookedSlots());
                 if (bookingEndTime != null && utcNow.isAfter(bookingEndTime)) {
                     toRemove.add(activeBooking);
+                    steveService.turnOn(activeBooking.getRentedWallbox().getWallbox().getPhysicalId());
                     System.out.println(" Current UTC time " + utcNow + "; Deactivating booking with ID " + activeBooking.getId());
                 }
             }
