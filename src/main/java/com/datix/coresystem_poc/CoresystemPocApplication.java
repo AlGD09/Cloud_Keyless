@@ -36,19 +36,6 @@ public class CoresystemPocApplication {
     }
 
     @Bean
-    CommandLineRunner init(UserRepository userRepository) {
-        return args -> {
-            Stream.of("John", "Julie", "Jennifer", "Helen", "Rachel").forEach(name -> {
-                User user = User.builder()
-                        .name(name)
-                        .email(name.toLowerCase() + "@domain.com").build();
-                userRepository.save(user);
-            });
-            userRepository.findAll().forEach(System.out::println);
-        };
-    }
-
-    @Bean
     CommandLineRunner initialObjects(WallboxOwnerRepository ownerRepository,
                                      WallboxRepository wallboxRepository,
                                      RentedWallboxRepository rentedWallboxRepository,

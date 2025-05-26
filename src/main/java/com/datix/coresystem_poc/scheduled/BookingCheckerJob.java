@@ -1,6 +1,5 @@
 package com.datix.coresystem_poc.scheduled;
 
-import com.datix.coresystem_poc.entity.BookedTimeSlot;
 import com.datix.coresystem_poc.entity.Booking;
 import com.datix.coresystem_poc.repository.BookingRepository;
 import com.datix.coresystem_poc.service.SteveService;
@@ -13,6 +12,9 @@ import java.time.ZoneOffset;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static com.datix.coresystem_poc.util.BookingUtil.findEarliestStartTime;
+import static com.datix.coresystem_poc.util.BookingUtil.findLatestEndTime;
 
 @Component
 public class BookingCheckerJob {
@@ -66,30 +68,6 @@ public class BookingCheckerJob {
 
             activeBookings.removeAll(toRemove);
         }
-    }
-
-    private static LocalDateTime findEarliestStartTime(List<BookedTimeSlot> slots) {
-        if (slots == null || slots.isEmpty()) {
-            return null;
-        }
-
-        return slots.stream()
-                .map(BookedTimeSlot::getStartTime)
-                .filter(time -> time != null)
-                .min(LocalDateTime::compareTo)
-                .orElse(null);
-    }
-
-    private static LocalDateTime findLatestEndTime(List<BookedTimeSlot> slots) {
-        if (slots == null || slots.isEmpty()) {
-            return null;
-        }
-
-        return slots.stream()
-                .map(BookedTimeSlot::getEndTime)
-                .filter(time -> time != null)
-                .max(LocalDateTime::compareTo)
-                .orElse(null);
     }
 }
 
