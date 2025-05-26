@@ -77,7 +77,7 @@ loadWallboxes() {
   }
 
     get buttonLabel(): string {
-      return this.clickCount % 2 === 0 ? 'I\'m at the booked wallbox' : 'I left the booked wallbox';
+      return this.clickCount % 2 === 0 ? 'I\'m at the wallbox' : 'I left the wallbox';
   }
 
   handleClick() {
@@ -131,5 +131,9 @@ toggleCharging() {
     this.chargingService.remoteStart();
   }
   this.isCharging = !this.isCharging;
+}
+
+getButtonColorClass(count: number): string {
+  return count % 2 === 0 ? 'green-button' : 'red-button';
 }
 }

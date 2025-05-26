@@ -17,16 +17,16 @@
   <div *ngIf="upcomingBooking">
     <h2>{{ label }}</h2>
 
-<!-- Show button only during active booking -->
+<!-- Button for "I'm at the booked wallbox / I left the booked wallbox" -->
 <div *ngIf="isBookingActive">
-  <button (click)="handleClick()">
+  <button (click)="handleClick()" [ngClass]="getButtonColorClass(clickCount)">
     {{ buttonLabel }}
   </button>
 </div>
 
-<!-- Show charging control if at wallbox -->
+<!-- Button for charging control -->
 <div *ngIf="isAtWallbox">
-  <button (click)="toggleCharging()">
+  <button (click)="toggleCharging()" [ngClass]="isCharging ? 'red-button' : 'green-button'">
     {{ isCharging ? 'Stop charging' : 'Charge' }}
   </button>
 </div>
