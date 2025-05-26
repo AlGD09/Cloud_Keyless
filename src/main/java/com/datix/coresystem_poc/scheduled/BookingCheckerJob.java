@@ -26,22 +26,28 @@ public class BookingCheckerJob {
         LocalDateTime utcNow = LocalDateTime.now(ZoneOffset.UTC);
         List<Booking> bookings = bookingRepository.findAll();
 
-        System.out.println("Scheduled task running every minute - " + utcNow);
+        System.out.println("Scheduled booking activating task running every minute - " + utcNow);
+        checkBookingsToActivate(utcNow, bookings);
+        checkBookingsToDeactivate(utcNow);
+        ;
+    }
 
-
-        for (Booking booking : bookings) {
+    private void checkBookingsToActivate(LocalDateTime utcNow, List<Booking> bookingsToCheck) {
+        for (Booking booking : bookingsToCheck) {
             LocalDateTime bookingStartTime = findEarliestStartTime(booking.getBookedSlots());
             LocalDateTime bookingEndTime = findLatestEndTime(booking.getBookedSlots());
-                if (bookingStartTime != null && bookingEndTime != null) {
-                    boolean isActive = !utcNow.isBefore(bookingStartTime) && utcNow.isBefore(bookingEndTime);
-                    if (isActive && activeBookings.add(booking)) {
-                        System.out.println(" Current UTC time " + utcNow + "; Activating booking with ID " + booking.getId()
-                                + "; Active until " + bookingEndTime);
-                        // Add your logic here for active slots
-                    }
+            if (bookingStartTime != null && bookingEndTime != null) {
+                boolean isActive = !utcNow.isBefore(bookingStartTime) && utcNow.isBefore(bookingEndTime);
+                if (isActive && activeBookings.add(booking)) {
+                    System.out.println(" Current UTC time " + utcNow + "; Activating booking with ID " + booking.getId()
+                            + "; Active until " + bookingEndTime);
+                    // Add your logic here for active slots
                 }
+            }
         }
+    }
 
+    private void checkBookingsToDeactivate(LocalDateTime utcNow) {
         if (!activeBookings.isEmpty()) {
             Set<Booking> toRemove = new HashSet<>();
 
@@ -55,7 +61,6 @@ public class BookingCheckerJob {
 
             activeBookings.removeAll(toRemove);
         }
-
     }
 
     private static LocalDateTime findEarliestStartTime(List<BookedTimeSlot> slots) {
