@@ -8,19 +8,21 @@ import { Wallbox } from '../../model/wallbox';
 import { Booking, UpcomingBooking } from '../../model/booking';
 import { format } from 'date-fns';
 import { RentedWallboxService } from '../../services/rentedWallbox.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-charging',
+  standalone: true,
   templateUrl: './charging.component.html',
-  imports: [CommonModule, HttpClientModule],
-  styleUrls: ['./charging.component.scss']
+  styleUrls: ['./charging.component.scss'],
+  imports: [CommonModule, HttpClientModule, FormsModule]
 })
 export class ChargingComponent implements OnInit, OnDestroy {
 
   clickCount = 0;
   USER = "Elekey";
-  wallboxes: RentedWallbox[] = [];
-  selectedWallbox!: RentedWallbox;
+  wallboxes: Wallbox[] = [];
+  selectedWallbox!: Wallbox;
   upcomingBooking: UpcomingBooking | null = null;
   currentTime: Date = new Date();
   isAtWallbox = false;
@@ -43,12 +45,13 @@ export class ChargingComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadWallboxes() {
-    this.rentedWallboxService.findAllRented().subscribe(wallboxes => {
-      this.wallboxes = wallboxes;
-      this.selectedWallbox = wallboxes[0]; // Default selection
-    });
-  }
+loadWallboxes() {
+  this.rentedWallboxService.findAll().subscribe(wallboxes => {
+    this.wallboxes = wallboxes;
+    this.selectedWallbox = wallboxes[0]; // Default selection
+    this.fetchUpcomingBooking(); // Now safe to call
+  });
+}
 
   fetchUpcomingBooking() {
     this.bookingService.getUpcomingBooking(this.USER, this.selectedWallbox.id).subscribe(booking => {
@@ -102,6 +105,10 @@ export class ChargingComponent implements OnInit, OnDestroy {
     }
     this.clickCount++;
   }
+
+  onWallboxChange() {
+  this.fetchUpcomingBooking();
+}
 
   get isBookingActive(): boolean {
   if (!this.upcomingBooking) return false;

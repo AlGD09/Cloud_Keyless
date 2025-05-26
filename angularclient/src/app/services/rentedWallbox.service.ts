@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { RentedWallbox } from '../model/wallbox';
+import { RentedWallbox, Wallbox } from '../model/wallbox';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -16,5 +16,9 @@ export class RentedWallboxService {
 
   public findAllRented(): Observable<RentedWallbox[]> {
     return this.http.get<RentedWallbox[]>(this.wallboxUrl + "/rented");
+  }
+
+    public findAll(): Observable<Wallbox[]> {
+    return this.http.get<Wallbox[]>(this.wallboxUrl);
   }
 }

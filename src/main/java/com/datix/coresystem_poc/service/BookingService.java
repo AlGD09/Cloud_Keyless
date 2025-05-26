@@ -66,7 +66,7 @@ public class BookingService {
 
         return optionalBooking
                 .map(value -> ResponseEntity.ok(new UpcomingBooking(value)))      // if present, return 200 + body
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElseGet(() -> ResponseEntity.noContent().build());
     }
 
     public Integer getTimeSlotLength() {

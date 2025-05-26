@@ -1,19 +1,30 @@
 <div class="charging-container">
-<!-- Show fallback if no upcoming booking -->
-<h1 *ngIf="!upcomingBooking">You have no upcoming booking!</h1>
 
-<!-- If there's an upcoming booking -->
-<div *ngIf="upcomingBooking">
-  <h2>{{ buttonLabel }}</h2>
+  <!-- Dropdown for selecting a rented wallbox -->
+  <div class="selector">
+    <label for="wallboxSelect">Select Wallbox:</label>
+    <select id="wallboxSelect" [(ngModel)]="selectedWallbox" (change)="onWallboxChange()">
+      <option *ngFor="let wallbox of wallboxes" [ngValue]="wallbox">
+        {{ wallbox.owner.name }} - {{ wallbox.name }}
+      </option>
+    </select>
+  </div>
 
-  <!-- Show button only during active booking -->
-  <button *ngIf="isBookingActive" (click)="handleClick()">
-    {{ buttonLabel }}
-  </button>
+  <!-- Show fallback if no upcoming booking -->
+  <h1 *ngIf="!upcomingBooking">You have no upcoming booking!</h1>
 
-  <!-- Show charging control if at wallbox -->
-  <button *ngIf="isAtWallbox" (click)="toggleCharging()">
-    {{ isCharging ? 'Stop charging' : 'Charge' }}
-  </button>
-</div>
+  <!-- If there's an upcoming booking -->
+  <div *ngIf="upcomingBooking">
+    <h2>{{ buttonLabel }}</h2>
+
+    <!-- Show button only during active booking -->
+    <button *ngIf="isBookingActive" (click)="handleClick()">
+      {{ buttonLabel }}
+    </button>
+
+    <!-- Show charging control if at wallbox -->
+    <button *ngIf="isAtWallbox" (click)="toggleCharging()">
+      {{ isCharging ? 'Stop charging' : 'Charge' }}
+    </button>
+  </div>
 </div>

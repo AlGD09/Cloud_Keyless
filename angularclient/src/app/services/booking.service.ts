@@ -18,9 +18,15 @@ export class BookingService {
       return this.http.get<Booking[]>(this.bookingUrl);
     }
 
-      getUpcomingBooking(userId: string, wallboxId: number): Observable<UpcomingBooking> {
-    return this.http.get<UpcomingBooking>(`${this.bookingUrl}/upcoming/${userId}/${wallboxId}`);
-  }
+getUpcomingBooking(userId: string, wallboxId: number): Observable<UpcomingBooking> {
+  return this.http.get<UpcomingBooking>(`${this.bookingUrl}/upcoming`, {
+    params: {
+      username: userId,
+      wallboxId: wallboxId.toString()
+    }
+  });
+}
+
 
     public getTimeSlotLength(): Observable<any> {
       return this.http.get<{timeSlotLength: number}>(this.bookingUrl + "/time-slot-length");
