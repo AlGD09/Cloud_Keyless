@@ -105,7 +105,7 @@ generateSlots() {
   while (slotStart < end && slotStart.getDate() === this.selectedDate.getDate()) {
     // Check if slotStart is within rental period
     if (slotStart >= start && slotStart < end) {
-      const slotKey = slotStart.toISOString();
+      const slotKey = slotStart.toString();
 
       // const booked = this.bookings.some(booking =>
       //   new Date(booking.startTime) <= slotStart && new Date(booking.endTime) > slotStart
@@ -142,8 +142,8 @@ confirmBooking() {
 const booking: BookingRegister = {
   bookingUserId: 1,
   rentedWallboxId: this.selectedWallbox.id,
-  startTime: start,
-  endTime: end
+  startTime: this.toLocalISOString(start),
+  endTime: this.toLocalISOString(end)
 }
 
 console.log(booking)
@@ -181,5 +181,12 @@ getRentalPeriod() {
     start: new Date(rented.startTime),
     end: new Date(rented.endTime)
   };
+}
+
+// Helper to strip timezone (Berlin assumed to be system time)
+toLocalISOString(date: Date): string {
+  const tzOffset = date.getTimezoneOffset() * 60000; // offset in ms
+  const localISOTime = new Date(date.getTime() - tzOffset).toISOString().slice(0, 19);
+  return localISOTime;
 }
 }

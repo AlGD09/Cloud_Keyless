@@ -4,8 +4,8 @@ import { RentedWallbox } from "./wallbox";
 export interface BookingRegister {
   bookingUserId: number;
   rentedWallboxId: number;
-  startTime: Date;
-  endTime: Date;
+  startTime: string; //string to enforece Berlin time
+  endTime: string; //string to enforece Berlin time
 }
 
 export interface Booking {

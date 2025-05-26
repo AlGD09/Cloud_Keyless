@@ -29,7 +29,7 @@ public class BookingCheckerJob {
 
     @Scheduled(cron = "0 * * * * ?") // every minute at 0 seconds
     public void checkCurrentBookings() {
-        LocalDateTime utcNow = LocalDateTime.now(ZoneOffset.UTC);
+        LocalDateTime utcNow = LocalDateTime.now();
         List<Booking> bookings = bookingRepository.findAll();
 
         System.out.println("Scheduled booking activating task running every minute - " + utcNow);
@@ -46,7 +46,7 @@ public class BookingCheckerJob {
                 boolean isActive = !utcNow.isBefore(bookingStartTime) && utcNow.isBefore(bookingEndTime);
                 if (isActive && activeBookings.add(booking)) {
                     steveService.turnOff(booking.getRentedWallbox().getWallbox().getPhysicalId());
-                    System.out.println(" Current UTC time " + utcNow + "; Activating booking with ID " + booking.getId()
+                    System.out.println(" Current time " + utcNow + "; Activating booking with ID " + booking.getId()
                             + "; Active until " + bookingEndTime);
                 }
             }

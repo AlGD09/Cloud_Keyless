@@ -46,7 +46,7 @@ public class BookingService {
 
     public ResponseEntity<UpcomingBooking> getUpcomingBooking(String username, Long wallboxId) {
         List<Booking> bookings = bookingRepository.findByBookingUserNameAndRentedWallbox_Wallbox_Id(username, wallboxId);
-        LocalDateTime now = LocalDateTime.now(ZoneOffset.UTC);
+        LocalDateTime now = LocalDateTime.now();
 
         Optional<Booking> optionalBooking = bookings.stream()
                 .filter(b -> b.getBookedSlots() != null && !b.getBookedSlots().isEmpty())

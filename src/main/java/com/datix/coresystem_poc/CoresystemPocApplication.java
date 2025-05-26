@@ -24,7 +24,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.stream.Stream;
 
 @SpringBootApplication
 @EnableScheduling
@@ -76,7 +75,7 @@ public class CoresystemPocApplication {
 
             BookedTimeSlot slot = BookedTimeSlot.builder()
                     .bookingTime(LocalDateTime.now())
-                    .startTime(LocalDateTime.now())
+                    .startTime(LocalDateTime.now().plusMinutes(5))
                     .endTime(LocalDateTime.now().plusMinutes(15))
                     .build();
 
