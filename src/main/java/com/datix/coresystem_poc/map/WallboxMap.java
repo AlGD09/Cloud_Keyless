@@ -9,7 +9,7 @@ public class WallboxMap {
     public static Wallbox toEntity(RentedWallboxRegistrationDTO wallboxDTO, WallboxOwner owner) {
         return Wallbox.builder()
                 .physicalId(wallboxDTO.getWallboxId())
-                .name(wallboxDTO.getOwnerName())
+                .name(wallboxDTO.getWallboxName())
                 .owner(owner)
                 .build();
     }
@@ -17,7 +17,7 @@ public class WallboxMap {
     public static Wallbox toEntity(RentedWallboxRegistrationDTO wallboxDTO) {
         return Wallbox.builder()
                 .physicalId(wallboxDTO.getWallboxId())
-                .name(wallboxDTO.getOwnerName())
+                .name(wallboxDTO.getWallboxName())
                 .owner(WallboxOwnerMap.toEntity(wallboxDTO))
                 .build();
     }

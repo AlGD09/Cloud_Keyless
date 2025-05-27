@@ -29,7 +29,7 @@ public class RentingService {
     public void registerRentedWallbox(RentedWallboxRegistrationDTO wallboxDTO) {
         WallboxOwner owner = ownerRepository.findByName(wallboxDTO.getOwnerName())
                 .orElseGet(() -> ownerRepository.save(WallboxOwnerMap.toEntity(wallboxDTO)));
-        Wallbox wallbox = wallboxRepository.findByName(wallboxDTO.getOwnerName())
+        Wallbox wallbox = wallboxRepository.findByName(wallboxDTO.getWallboxName())
                 .orElseGet(() -> wallboxRepository.save(WallboxMap.toEntity(wallboxDTO, owner)));
 
         rentedWallboxRepository.save(RentedWallboxMap.toEntity(wallboxDTO, wallbox));
