@@ -57,13 +57,13 @@ public class SteveService {
     }
 
     public Integer triggerRemoteStart(String rentedWallboxId) {
-        ResponseEntity<String> response = steveRestTemplate.postForEntity(
+        ResponseEntity<Integer> response = steveRestTemplate.postForEntity(
                 STEVE_URL + STEVE_ELEKEY_PATH + REMOTE_START_PATH,
                 createRemoteStartRequest(rentedWallboxId),
-                String.class
+                Integer.class
         );
 
-        return new Integer(response.getBody());
+        return response.getBody();
     }
 
     public String triggerRemoteStop(String rentedWallboxId, Integer transactionId) {
