@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -17,20 +18,18 @@ public class SteveController {
     @Autowired
     SteveService service;
 
-    private Integer latestTransactionId = 0;
-
     private final String WALLBOX_PHYSICAL_ID = "ABL_10355221";
 
     @PostMapping("/remoteStart")
     public ResponseEntity<Void> triggerRemoteStart() {
-       latestTransactionId = service.triggerRemoteStart(WALLBOX_PHYSICAL_ID);
+       service.triggerRemoteStart(WALLBOX_PHYSICAL_ID);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/remoteStop")
-    public ResponseEntity<Void> triggerRemoteStop() {
-        service.triggerRemoteStop(WALLBOX_PHYSICAL_ID, latestTransactionId);
+    public ResponseEntity<Void> triggerRemoteStop(@RequestParam("bookingId") Long bookingId) {
+        service.triggerRemoteStop(WALLBOX_PHYSICAL_ID);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

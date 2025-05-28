@@ -66,10 +66,10 @@ public class SteveService {
         return response.getBody();
     }
 
-    public String triggerRemoteStop(String rentedWallboxId, Integer transactionId) {
+    public String triggerRemoteStop(String rentedWallboxId) {
         ResponseEntity<String> response = steveRestTemplate.postForEntity(
                 STEVE_URL + STEVE_ELEKEY_PATH + REMOTE_STOP_PATH,
-                createRemoteStopRequest(rentedWallboxId, transactionId),
+                createRemoteStopRequest(rentedWallboxId),
                 String.class
         );
 
@@ -104,10 +104,10 @@ public class SteveService {
         return new HttpEntity<>(body, createRequestHeader());
     }
 
-    private HttpEntity<MultiValueMap<String, String>> createRemoteStopRequest(String wallboxPhysicalId, Integer transactionId) {
+    private HttpEntity<MultiValueMap<String, String>> createRemoteStopRequest(String wallboxPhysicalId) {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add(CHARGE_POINT_KEY, String.format(CHARGE_POINT_VALUE_FORMAT, wallboxPhysicalId));
-        body.add(TRANSACTION_ID_KEY, transactionId.toString());
+        body.add(TRANSACTION_ID_KEY, "0");
 
         return new HttpEntity<>(body, createRequestHeader());
     }
