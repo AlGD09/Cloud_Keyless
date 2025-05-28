@@ -38,6 +38,13 @@ public class BookingController {
          return service.getUpcomingBooking(username, wallboxId);
     }
 
+    @GetMapping("/invoices")
+    public ResponseEntity getInvoices(
+            @RequestParam String username
+    ) {
+        return service.getInvoices(username);
+    }
+
     @GetMapping("/time-slot-length")
     public ResponseEntity<Integer> getTimeSlotLength() {
         return new ResponseEntity<>(service.getTimeSlotLength() ,HttpStatus.OK);
