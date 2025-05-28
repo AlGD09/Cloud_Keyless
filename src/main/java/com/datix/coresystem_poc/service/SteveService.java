@@ -1,6 +1,11 @@
 package com.datix.coresystem_poc.service;
 
 import com.datix.coresystem_poc.dto.TransactionDetailsDTO;
+import com.datix.coresystem_poc.entity.Booking;
+import com.datix.coresystem_poc.entity.ChargingTransaction;
+import com.datix.coresystem_poc.map.TransactionMap;
+import com.datix.coresystem_poc.repository.BookingRepository;
+import com.datix.coresystem_poc.repository.ChargingTransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,6 +23,12 @@ public class SteveService {
     private RestTemplate steveRestTemplate;
 
     private final String STEVE_URL = "http://host.docker.internal:8180";
+    @Autowired
+    private BookingRepository bookingRepository;
+
+    @Autowired
+    private ChargingTransactionRepository transactionRepository;
+
     private final String STEVE_ELEKEY_PATH = "/steve/elekey";
 
     private final String CHANGE_AVAILABILITY_PATH = "/ChangeAvailability";
@@ -66,14 +77,16 @@ public class SteveService {
         return response.getBody();
     }
 
-    public String triggerRemoteStop(String rentedWallboxId) {
-        ResponseEntity<String> response = steveRestTemplate.postForEntity(
+    public void triggerRemoteStop(String rentedWallboxId, Long bookingId) {
+        ResponseEntity<TransactionDetailsDTO> response = steveRestTemplate.postForEntity(
                 STEVE_URL + STEVE_ELEKEY_PATH + REMOTE_STOP_PATH,
                 createRemoteStopRequest(rentedWallboxId),
-                String.class
+                TransactionDetailsDTO.class
         );
-
-        return response.getBody();
+        Booking booking = bookingRepository.findById(bookingId).orElseThrow();
+        ChargingTransaction transaction = TransactionMap.toEntity(response.getBody());
+        booking.addTransaction(transaction);
+        bookingRepository.save(booking);
     }
 
 

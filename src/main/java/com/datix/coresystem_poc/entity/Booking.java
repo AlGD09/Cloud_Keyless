@@ -1,6 +1,7 @@
 package com.datix.coresystem_poc.entity;
 
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -17,6 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -43,7 +45,14 @@ public class Booking {
     @OneToMany(fetch = FetchType.EAGER)
     private List<BookedTimeSlot> bookedSlots;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<ChargingTransaction> chargingTransactions;
+
+    public void addTransaction(ChargingTransaction transaction) {
+        if (chargingTransactions == null) {
+            this.chargingTransactions = new ArrayList<>();
+        }
+        chargingTransactions.add(transaction);
+    }
 
 }

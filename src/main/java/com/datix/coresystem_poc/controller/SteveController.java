@@ -29,7 +29,7 @@ public class SteveController {
 
     @PostMapping("/remoteStop")
     public ResponseEntity<Void> triggerRemoteStop(@RequestParam("bookingId") Long bookingId) {
-        service.triggerRemoteStop(WALLBOX_PHYSICAL_ID);
+        service.triggerRemoteStop(WALLBOX_PHYSICAL_ID, bookingId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

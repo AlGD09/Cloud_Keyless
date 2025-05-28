@@ -102,6 +102,9 @@ public class CoresystemPocApplication {
 
             System.out.println(transaction);
             transactionRepository.save(transaction);
+
+//            steveService.triggerRemoteStop("whatever", 1L);
+//            steveService.triggerRemoteStop("whatever", 1L);
         };
     }
 }
