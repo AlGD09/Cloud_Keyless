@@ -1,5 +1,6 @@
 package com.datix.coresystem_poc.service;
 
+import com.datix.coresystem_poc.dto.TransactionDetailsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +23,7 @@ public class SteveService {
     private final String CHANGE_AVAILABILITY_PATH = "/ChangeAvailability";
     private final String REMOTE_START_PATH = "/RemoteStart";
     private final String REMOTE_STOP_PATH = "/RemoteStop";
+    private final String TRANSACTION_DETAILS_PATH = "/transactions/details";
 
     private final String CHARGE_POINT_KEY = "chargePointSelectList";
     private final String CHARGE_POINT_VALUE_FORMAT = "V_16_JSON;%s;-";
@@ -69,6 +71,16 @@ public class SteveService {
                 STEVE_URL + STEVE_ELEKEY_PATH + REMOTE_STOP_PATH,
                 createRemoteStopRequest(rentedWallboxId, transactionId),
                 String.class
+        );
+
+        return response.getBody();
+    }
+
+
+    public TransactionDetailsDTO getTransactionDetails(int transactionId) {
+        ResponseEntity<TransactionDetailsDTO> response = steveRestTemplate.getForEntity(
+                STEVE_URL + STEVE_ELEKEY_PATH + TRANSACTION_DETAILS_PATH + String.format("/%s", transactionId),
+                TransactionDetailsDTO.class
         );
 
         return response.getBody();

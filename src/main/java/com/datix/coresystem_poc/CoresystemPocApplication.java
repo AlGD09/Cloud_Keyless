@@ -2,18 +2,22 @@ package com.datix.coresystem_poc;
 
 import com.datix.coresystem_poc.config.PingConfig;
 import com.datix.coresystem_poc.config.TimeSlotConfig;
+import com.datix.coresystem_poc.dto.TransactionDetailsDTO;
 import com.datix.coresystem_poc.entity.BookedTimeSlot;
 import com.datix.coresystem_poc.entity.Booking;
+import com.datix.coresystem_poc.entity.ChargingTransaction;
 import com.datix.coresystem_poc.entity.RentedWallbox;
 import com.datix.coresystem_poc.entity.User;
 import com.datix.coresystem_poc.entity.Wallbox;
 import com.datix.coresystem_poc.entity.WallboxOwner;
+import com.datix.coresystem_poc.map.TransactionMap;
 import com.datix.coresystem_poc.repository.BookedTimeSlotRepository;
 import com.datix.coresystem_poc.repository.BookingRepository;
 import com.datix.coresystem_poc.repository.RentedWallboxRepository;
 import com.datix.coresystem_poc.repository.UserRepository;
 import com.datix.coresystem_poc.repository.WallboxOwnerRepository;
 import com.datix.coresystem_poc.repository.WallboxRepository;
+import com.datix.coresystem_poc.service.SteveService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -42,7 +46,8 @@ public class CoresystemPocApplication {
                                      BookedTimeSlotRepository bookedTimeSlotRepository,
                                      UserRepository userRepository,
                                      TimeSlotConfig timeSlotConfig,
-                                     PingConfig pingConfig
+                                     PingConfig pingConfig,
+                                     SteveService steveService
     ) {
         return args -> {
             WallboxOwner owner = WallboxOwner.builder().name("Heim").build();
@@ -90,6 +95,11 @@ public class CoresystemPocApplication {
 
             bookedTimeSlotRepository.save(slot);
             bookingRepository.save(booking);
+
+            TransactionDetailsDTO response = steveService.getTransactionDetails(1);
+            ChargingTransaction transaction = TransactionMap.toEntity(response);
+
+            System.out.println(transaction);
         };
     }
 }
