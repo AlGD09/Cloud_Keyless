@@ -97,11 +97,11 @@ public class CoresystemPocApplication {
             bookedTimeSlotRepository.save(slot);
             bookingRepository.save(booking);
 
-            TransactionDetailsDTO response = steveService.getTransactionDetails(1);
-            ChargingTransaction transaction = TransactionMap.toEntity(response);
-
-            System.out.println(transaction);
-            transactionRepository.save(transaction);
+//            TransactionDetailsDTO response = steveService.getTransactionDetails(1);
+//            ChargingTransaction transaction = TransactionMap.toEntity(response);
+//
+//            System.out.println(transaction);
+//            transactionRepository.save(transaction);
 
 //            steveService.triggerRemoteStop("whatever", 1L);
 //            steveService.triggerRemoteStop("whatever", 1L);
