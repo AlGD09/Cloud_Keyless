@@ -29,6 +29,8 @@ public class ChargingTransaction {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    private long transactionId;
+
     private Integer startWattsPerHour;
 
     private Integer endWattsPerHour;

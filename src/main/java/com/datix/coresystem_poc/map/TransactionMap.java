@@ -9,6 +9,7 @@ public class TransactionMap {
 
     public static ChargingTransaction toEntity(TransactionDetailsDTO transactionDetails) {
         return ChargingTransaction.builder()
+                .transactionId(transactionDetails.getTransaction().getId())
                 .startWattsPerHour(transactionDetails.getTransaction().getStartValue())
                 .endWattsPerHour(transactionDetails.getTransaction().getStopValue())
                 .startTime(transactionDetails.getTransaction().getStartTimestamp()
