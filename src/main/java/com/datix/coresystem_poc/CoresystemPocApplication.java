@@ -13,6 +13,7 @@ import com.datix.coresystem_poc.entity.WallboxOwner;
 import com.datix.coresystem_poc.map.TransactionMap;
 import com.datix.coresystem_poc.repository.BookedTimeSlotRepository;
 import com.datix.coresystem_poc.repository.BookingRepository;
+import com.datix.coresystem_poc.repository.ChargingTransactionRepository;
 import com.datix.coresystem_poc.repository.RentedWallboxRepository;
 import com.datix.coresystem_poc.repository.UserRepository;
 import com.datix.coresystem_poc.repository.WallboxOwnerRepository;
@@ -47,7 +48,8 @@ public class CoresystemPocApplication {
                                      UserRepository userRepository,
                                      TimeSlotConfig timeSlotConfig,
                                      PingConfig pingConfig,
-                                     SteveService steveService
+                                     SteveService steveService,
+                                     ChargingTransactionRepository transactionRepository
     ) {
         return args -> {
             WallboxOwner owner = WallboxOwner.builder().name("Heim").build();
@@ -88,7 +90,6 @@ public class CoresystemPocApplication {
                     .rentedWallbox(rentedWallbox)
                     .bookingUser(user)
                     .bookedSlots(List.of(slot))
-                    .pingInterval(pingConfig.getInterval())
                     .build();
 
             System.out.println(booking);
@@ -100,6 +101,7 @@ public class CoresystemPocApplication {
             ChargingTransaction transaction = TransactionMap.toEntity(response);
 
             System.out.println(transaction);
+            transactionRepository.save(transaction);
         };
     }
 }

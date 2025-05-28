@@ -43,10 +43,7 @@ public class Booking {
     @OneToMany(fetch = FetchType.EAGER)
     private List<BookedTimeSlot> bookedSlots;
 
-    @Builder.Default
-    private Integer pingInterval = 6;
-
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    private List<ChargingTransaction> chargingTransactions;
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<ChargingTransaction> chargingTransactions;
 
 }
