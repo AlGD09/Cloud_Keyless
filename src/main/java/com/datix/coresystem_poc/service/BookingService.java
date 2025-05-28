@@ -16,11 +16,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+
+import static com.datix.coresystem_poc.util.BookingUtil.findEarliestStartTime;
+import static com.datix.coresystem_poc.util.BookingUtil.findLatestEndTime;
 
 @Service
 public class BookingService {
@@ -49,23 +51,19 @@ public class BookingService {
         LocalDateTime now = LocalDateTime.now();
 
         Optional<Booking> optionalBooking = bookings.stream()
-                .filter(b -> b.getBookedSlots() != null && !b.getBookedSlots().isEmpty())
                 // Only consider bookings where latest endTime is after now
-                .filter(b -> b.getBookedSlots().stream()
-                        .map(BookedTimeSlot::getEndTime)
-                        .max(LocalDateTime::compareTo)
-                        .orElse(LocalDateTime.MIN)
-                        .isAfter(now)
-                )
+                .filter(b -> {
+                    LocalDateTime latestEndTime = findLatestEndTime(b.getBookedSlots());
+                    return latestEndTime != null && latestEndTime.isAfter(now);
+                })
                 // Get booking with earliest startTime
-                .min(Comparator.comparing(b -> b.getBookedSlots().stream()
-                        .map(BookedTimeSlot::getStartTime)
-                        .min(LocalDateTime::compareTo)
-                        .orElse(LocalDateTime.MAX)
-                ));
+                .min(Comparator.comparing(b -> {
+                    LocalDateTime earliestStartTime = findEarliestStartTime(b.getBookedSlots());
+                    return earliestStartTime != null ? earliestStartTime : LocalDateTime.MAX;
+                }));
 
         return optionalBooking
-                .map(value -> ResponseEntity.ok(new UpcomingBooking(value)))      // if present, return 200 + body
+                .map(booking -> ResponseEntity.ok(new UpcomingBooking(booking)))
                 .orElseGet(() -> ResponseEntity.noContent().build());
     }
 
