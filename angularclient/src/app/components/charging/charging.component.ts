@@ -6,7 +6,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BookingService } from '../../services/booking.service';
 import { Wallbox } from '../../model/wallbox';
 import { Booking, UpcomingBooking } from '../../model/booking';
-import { format } from 'date-fns';
+import { addMinutes, format } from 'date-fns';
 import { RentedWallboxService } from '../../services/rentedWallbox.service';
 import { FormsModule } from '@angular/forms';
 
@@ -70,7 +70,7 @@ loadWallboxes() {
     }
 
     if (now >= new Date(this.upcomingBooking.startTime) && now <= new Date(this.upcomingBooking.endTime)) {
-      return `Your booking ends at ${format(new Date(this.upcomingBooking.endTime), 'HH:mm')}`;
+      return `Your booking ends at ${format(addMinutes(new Date(this.upcomingBooking.endTime),1), 'HH:mm')}`;
     }
 
     return 'You have no upcoming booking!';
