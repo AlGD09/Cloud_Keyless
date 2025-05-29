@@ -1,5 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { Booking } from './../model/booking';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { UpcomingBooking } from '../model/booking';
 
 @Injectable({
   providedIn: 'root'
@@ -36,12 +38,20 @@ export class ChargingService {
     });
   }
 
-  public remoteStop(): void {
-    this.http.post(this.steveControllerUrl + "/remoteStop", null)
-    .subscribe({
-      next: res => console.log('remoteStop successfully', res),
-      error: err => console.error('Failed to remoteStop:', err)
-    });
-  }
+
+public remoteStop(booking: Booking): void {
+  const params = new HttpParams().set('bookingId', booking.id.toString());
+
+  this.http.post(
+    this.steveControllerUrl + "/remoteStop",
+    {}, // empty body for POST
+    { params }
+  )
+  .subscribe({
+    next: res => console.log('remoteStop successfully', res),
+    error: err => console.error('Failed to remoteStop:', err)
+  });
+}
+
 }
 

@@ -103,15 +103,6 @@ loadWallboxes() {
     return this.clickCount % 2 === 0 ? 'Charge' : 'Stop charging';
   }
 
-  handleChargeClick() {
-    if (this.clickCount % 2 === 0) {
-      this.chargingService.remoteStart();
-    } else {
-      this.chargingService.remoteStop();
-    }
-    this.clickCount++;
-  }
-
   onWallboxChange() {
   this.fetchUpcomingBooking();
 }
@@ -126,7 +117,10 @@ loadWallboxes() {
 
 toggleCharging() {
   if (this.isCharging) {
-    this.chargingService.remoteStop();
+    if (this.upcomingBooking) {
+      console.log(this.upcomingBooking)
+      this.chargingService.remoteStop(this.upcomingBooking.booking);
+    }
   } else {
     this.chargingService.remoteStart();
   }

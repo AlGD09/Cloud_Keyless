@@ -16,7 +16,7 @@ export interface Booking {
 }
 
 export interface UpcomingBooking {
-  booking: RentedWallbox;
+  booking: Booking;
   startTime: Date;
   endTime: Date;
 }
