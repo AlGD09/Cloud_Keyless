@@ -121,7 +121,7 @@ generateSlots() {
         const tsStart = new Date(ts.startTime);
         const tsEnd = new Date(ts.endTime);
 
-        if (slotStart >= tsStart && slotStart < tsEnd) {
+        if (slotStart >= tsStart && slotStart < tsEnd && booking.rentedWallbox.wallbox.id == this.selectedWallbox.id) {
           bookingUser = booking.bookingUser;
           break;
         }
