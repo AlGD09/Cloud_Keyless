@@ -81,9 +81,9 @@ public class CoresystemPocApplication {
             userRepository.save(user);
 
             BookedTimeSlot slot = BookedTimeSlot.builder()
-                    .bookingTime(LocalDateTime.now())
-                    .startTime(LocalDateTime.now().plusMinutes(5))
-                    .endTime(LocalDateTime.now().plusMinutes(15))
+                    .bookingTime(LocalDateTime.now().minusHours(1))
+                    .startTime(LocalDateTime.now().plusMinutes(5).minusHours(1))
+                    .endTime(LocalDateTime.now().plusMinutes(15).minusHours(1))
                     .build();
 
             Booking booking = Booking.builder()
