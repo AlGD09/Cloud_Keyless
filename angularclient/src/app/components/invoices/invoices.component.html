@@ -1,0 +1,28 @@
+<div *ngIf="isLoading">Loading...</div>
+
+<div *ngIf="!isLoading && bookings.length === 0" class="no-bookings">
+  You have no finished bookings yet!
+</div>
+
+<table *ngIf="bookings.length > 0" mat-table [dataSource]="bookings" class="mat-elevation-z8">
+  <!-- Wallbox Column -->
+  <ng-container matColumnDef="wallbox">
+    <th mat-header-cell *matHeaderCellDef> Wallbox </th>
+    <td mat-cell *matCellDef="let element"> {{element.booking.wallbox.name}} </td>
+  </ng-container>
+
+  <!-- From Column -->
+  <ng-container matColumnDef="from">
+    <th mat-header-cell *matHeaderCellDef> From </th>
+    <td mat-cell *matCellDef="let element"> {{element.startTime | date:'short'}} </td>
+  </ng-container>
+
+  <!-- To Column -->
+  <ng-container matColumnDef="to">
+    <th mat-header-cell *matHeaderCellDef> To </th>
+    <td mat-cell *matCellDef="let element"> {{element.endTime | date:'short'}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="['wallbox', 'from', 'to']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['wallbox', 'from', 'to']" (click)="openDialog(row)"></tr>
+</table>
