@@ -28,9 +28,9 @@
       <div>
         Slots selected:
         <br/>
-        <strong *ngIf="selectedSlots.size > 0">{{
-          getSelectedSlotRange()
-        }}</strong>
+        <strong *ngIf="getSelectedSlotRange() as range">
+          {{ range.start | date: 'HH:mm' }} - {{ range.end | date: 'HH:mm' }}
+        </strong>
       </div>
 
       <button (click)="confirmBooking()">Confirm booking</button>

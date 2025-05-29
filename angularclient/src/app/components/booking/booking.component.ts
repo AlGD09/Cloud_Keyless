@@ -164,13 +164,14 @@ this.bookingService.registerBooking(booking).subscribe({
     return this.selectedSlots.has(slotKey);
   }
 
-  getSelectedSlotRange(): string {
-  if (this.selectedSlots.size === 0) return '';
+getSelectedSlotRange(): { start: Date, end: Date } | null {
+  if (this.selectedSlots.size === 0) return null;
 
   const sorted = Array.from(this.selectedSlots).sort();
   const start = new Date(sorted[0]);
-  const end = new Date(sorted[sorted.length - 1]);
-  return `${start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+  const end = addMinutes(new Date(sorted[sorted.length - 1]), this.slotDurationMinutes);
+
+  return { start, end };
 }
 
 getRentalPeriod() {
