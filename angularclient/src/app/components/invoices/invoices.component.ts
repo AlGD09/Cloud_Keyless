@@ -1,3 +1,4 @@
+import { BookingService } from './../../services/booking.service';
 import { InvoiceDialogComponent } from './../invoice-dialog/invoice-dialog.component';
 import { Component, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
@@ -5,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { UpcomingBooking } from '../../model/booking';
 import { CommonModule } from '@angular/common';
+import { Invoice } from '../../model/invoice';
 
 @Component({
   selector: 'app-upcoming-bookings',
@@ -14,20 +16,22 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./invoices.component.scss']
 })
 export class InvoicesComponent implements OnInit {
-  bookings: UpcomingBooking[] = [];
+  invoices: Invoice[] = [];
   isLoading = true;
+  USER = "Elekey";
 
-  constructor(private http: HttpClient, private dialog: MatDialog) {}
+  constructor(private http: HttpClient, private dialog: MatDialog, private bookingService: BookingService) {}
 
   ngOnInit(): void {
-    this.http.get<UpcomingBooking[]>('/api/upcoming-bookings')
+    this.bookingService.getInvoices(this.USER)
       .subscribe({
-        next: data => {
-          this.bookings = data;
+        next: invoices => {
+          this.invoices = invoices;
+          console.log(invoices);
           this.isLoading = false;
         },
         error: () => {
-          this.bookings = [];
+          this.invoices = [];
           this.isLoading = false;
         }
       });

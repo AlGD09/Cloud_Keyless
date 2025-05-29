@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Booking, BookingRegister, UpcomingBooking } from '../model/booking';
 import { Observable } from 'rxjs/internal/Observable';
+import { Invoice } from '../model/invoice';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,14 @@ getUpcomingBooking(userId: string, wallboxId: number): Observable<UpcomingBookin
     params: {
       username: userId,
       wallboxId: wallboxId.toString()
+    }
+  });
+}
+
+getInvoices(userId: string): Observable<Invoice[]> {
+  return this.http.get<Invoice[]>(`${this.bookingUrl}/invoices`, {
+    params: {
+      username: userId
     }
   });
 }

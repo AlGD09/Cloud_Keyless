@@ -1,14 +1,14 @@
 <div *ngIf="isLoading">Loading...</div>
 
-<div *ngIf="!isLoading && bookings.length === 0" class="no-bookings">
-  You have no finished bookings yet!
+<div *ngIf="!isLoading && invoices.length === 0" class="no-bookings">
+  <h1>You have no finished bookings yet!</h1>
 </div>
 
-<table *ngIf="bookings.length > 0" mat-table [dataSource]="bookings" class="mat-elevation-z8">
+<table *ngIf="invoices.length > 0" mat-table [dataSource]="invoices" class="mat-elevation-z8">
   <!-- Wallbox Column -->
   <ng-container matColumnDef="wallbox">
     <th mat-header-cell *matHeaderCellDef> Wallbox </th>
-    <td mat-cell *matCellDef="let element"> {{element.booking.wallbox.name}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.wallboxOwner}} - {{element.wallboxName}} </td>
   </ng-container>
 
   <!-- From Column -->
