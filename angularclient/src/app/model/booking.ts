@@ -25,6 +25,7 @@ export interface BookedTimeSlot {
     id: number;
     startTime: Date;
     endTime: Date;
+    bookingTime: Date;
 }
 
 export interface TimeSlot {

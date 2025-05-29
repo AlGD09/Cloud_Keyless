@@ -4,6 +4,7 @@ import { Invoice } from '../../model/invoice';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-invoice-dialog',
@@ -12,7 +13,8 @@ import { MatTableModule } from '@angular/material/table';
     CommonModule,
     MatDialogModule,
     MatButtonModule,
-    MatTableModule
+    MatTableModule,
+    MatDividerModule
   ],
   templateUrl: './invoice-dialog.component.html',
   styleUrls: ['./invoice-dialog.component.scss']
@@ -20,6 +22,6 @@ import { MatTableModule } from '@angular/material/table';
 export class InvoiceDialogComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: Invoice) {}
 
-  timeSlotColumns: string[] = ['startTime', 'endTime', 'pings'];
-  transactionColumns: string[] = ['transactionId', 'startTime', 'endTime', 'wh'];
+  timeSlotColumns: string[] = ['startTime', 'endTime', 'bookingTime', 'pings'];
+  transactionColumns: string[] = ['startTime', 'endTime', 'wh'];
 }
