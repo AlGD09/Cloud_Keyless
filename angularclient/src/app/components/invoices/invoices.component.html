@@ -17,11 +17,11 @@
     <td mat-cell *matCellDef="let element"> {{element.startTime | date:'short'}} </td>
   </ng-container>
 
-  <!-- To Column -->
-  <ng-container matColumnDef="to">
-    <th mat-header-cell *matHeaderCellDef> To </th>
-    <td mat-cell *matCellDef="let element"> {{element.endTime | date:'short'}} </td>
-  </ng-container>
+<!-- To Column -->
+<ng-container matColumnDef="to">
+  <th mat-header-cell *matHeaderCellDef> To </th>
+  <td mat-cell *matCellDef="let element"> {{ addOneMinute(element.endTime) | date:'short' }} </td>
+</ng-container>
 
   <tr mat-header-row *matHeaderRowDef="['wallbox', 'from', 'to']"></tr>
   <tr mat-row *matRowDef="let row; columns: ['wallbox', 'from', 'to']" (click)="openDialog(row)"></tr>

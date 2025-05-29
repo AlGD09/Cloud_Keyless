@@ -42,4 +42,11 @@ export class InvoicesComponent implements OnInit {
       data: booking
     });
   }
+
+  addOneMinute(date: Date): Date {
+  const newDate = new Date(date);
+  newDate.setMinutes(newDate.getMinutes() + 1);
+  return newDate;
+}
+
 }
