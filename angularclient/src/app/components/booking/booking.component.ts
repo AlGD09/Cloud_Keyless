@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Booking } from '../../model/booking';
 import { MatDividerModule } from '@angular/material/divider';
 import { BookingService } from '../../services/booking.service';
@@ -24,7 +25,9 @@ import { User } from '../../model/user/user';
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
-  MatDividerModule],
+    MatDividerModule,
+    MatSnackBarModule
+],
   templateUrl: './booking.component.html',
   styleUrls: ['./booking.component.scss']
 })
@@ -40,7 +43,11 @@ export class BookingComponent implements OnInit {
   slotDurationMinutes = 15;
   columns = 60 / this.slotDurationMinutes;
 
-  constructor(private wallboxService: RentedWallboxService, private bookingService: BookingService) {}
+  constructor(
+    private wallboxService: RentedWallboxService,
+    private bookingService: BookingService,
+    private snackBar: MatSnackBar,
+  ) {}
 
 
   async ngOnInit() {
@@ -155,25 +162,36 @@ confirmBooking() {
   const start = new Date(sorted[0]);
   const end = addMinutes(new Date(sorted[sorted.length - 1]), this.slotDurationMinutes);
 
-const booking: BookingRegister = {
-  bookingUserId: 1,
-  rentedWallboxId: this.selectedWallbox.id,
-  startTime: this.toLocalISOString(start),
-  endTime: this.toLocalISOString(end)
+  const booking: BookingRegister = {
+    bookingUserId: 1,
+    rentedWallboxId: this.selectedWallbox.id,
+    startTime: this.toLocalISOString(start),
+    endTime: this.toLocalISOString(end)
+  };
+
+  this.bookingService.registerBooking(booking).subscribe({
+    next: () => {
+      this.selectedSlots.clear();
+      this.fetchBookings();
+
+      // ✅ Show success snackbar
+      this.snackBar.open('Booking confirmed successfully!', 'Close', {
+        duration: 3000,
+        panelClass: 'snackbar-success'
+      });
+    },
+    error: err => {
+      console.error('Booking failed:', err);
+
+      // ❌ Show error snackbar
+      this.snackBar.open('Booking failed. Please try again.', 'Close', {
+        duration: 3000,
+        panelClass: 'snackbar-error'
+      });
+    }
+  });
 }
 
-console.log(booking)
-
-this.bookingService.registerBooking(booking).subscribe({
-  next: () => {
-    this.selectedSlots.clear();
-    this.fetchBookings();
-  },
-  error: err => {
-    console.error('Booking failed:', err);
-  }
-})
-}
 
 
 isSelected(slot: TimeSlot): boolean {
