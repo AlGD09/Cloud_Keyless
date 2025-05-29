@@ -37,9 +37,9 @@ getInvoices(userId: string): Observable<Invoice[]> {
 }
 
 
-    public getTimeSlotLength(): Observable<any> {
-      return this.http.get<{timeSlotLength: number}>(this.bookingUrl + "/time-slot-length");
-    }
+public getTimeSlotLength(): Observable<any> {
+  return this.http.get<{timeSlotLength: number}>(this.bookingUrl + "/time-slot-length");
+}
 
 
 public registerBooking(booking: BookingRegister): Observable<any> {

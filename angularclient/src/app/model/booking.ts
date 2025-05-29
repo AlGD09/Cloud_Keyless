@@ -31,5 +31,5 @@ export interface BookedTimeSlot {
 export interface TimeSlot {
     startTime: Date;
     endTime: Date;
-    bookingUser: User;
+    bookingUser?: User;
 }

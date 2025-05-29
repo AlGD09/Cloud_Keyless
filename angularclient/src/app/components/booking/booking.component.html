@@ -57,11 +57,14 @@
   >
     <div
       *ngFor="let slot of timeSlots"
-      [ngClass]="{ booked: slot.booked, selected: isSelected(slot.key) }"
+      [ngClass]="{
+        booked: slot.bookingUser,
+        selected: isSelected(slot)
+      }"
       [style.gridColumn]="getGridColumn(slot)"
       (click)="toggleSlot(slot)"
     >
-      {{ slot.time | date : "HH:mm" }}
+      {{ slot.startTime | date: 'HH:mm' }}
     </div>
   </div>
 </div>

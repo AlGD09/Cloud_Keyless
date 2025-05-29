@@ -1,4 +1,4 @@
-import { BookingRegister } from './../../model/booking';
+import { BookingRegister, TimeSlot } from './../../model/booking';
 import { Wallbox, RentedWallbox } from '../../model/wallbox';
 import { Component, OnInit } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -14,6 +14,7 @@ import { Booking } from '../../model/booking';
 import { MatDividerModule } from '@angular/material/divider';
 import { BookingService } from '../../services/booking.service';
 import { firstValueFrom } from 'rxjs';
+import { User } from '../../model/user/user';
 
 
 @Component({
@@ -59,10 +60,10 @@ loadWallboxes() {
   });
 }
 
-getGridColumn(slot: any): number {
-  const minutes = slot.time.getMinutes();
-  return Math.floor(minutes / this.slotDurationMinutes) + 1;
+getGridColumn(slot: TimeSlot): number {
+  return Math.floor(slot.startTime.getMinutes() / this.slotDurationMinutes) + 1;
 }
+
 
 onDateChange(event: MatDatepickerInputEvent<Date>) {
   const selected = event.value;
@@ -85,7 +86,7 @@ onWallboxChange(wallboxId: number) {
   }
 
 generateSlots() {
-  const slots = [];
+  const slots: TimeSlot[] = [];
   const rentalPeriod = this.getRentalPeriod();
 
   if (!rentalPeriod) {
@@ -97,40 +98,55 @@ generateSlots() {
   let slotStart = new Date(this.selectedDate);
   slotStart.setHours(0, 0, 0, 0); // start of the selected day
 
-  // move slotStart to max of start of rentalPeriod or start of day
+  // Ensure start is within the rental period
   if (slotStart < start) {
     slotStart = new Date(start);
   }
 
   while (slotStart < end && slotStart.getDate() === this.selectedDate.getDate()) {
-    // Check if slotStart is within rental period
-    if (slotStart >= start && slotStart < end) {
-      const slotKey = slotStart.toString();
+    const slotEnd = addMinutes(slotStart, this.slotDurationMinutes);
 
-      // const booked = this.bookings.some(booking =>
-      //   new Date(booking.startTime) <= slotStart && new Date(booking.endTime) > slotStart
-      // );
+    // Determine if this slot is booked
+    let bookingUser: User | null = null;
 
-      slots.push({ time: new Date(slotStart), key: slotKey });
+    for (const booking of this.bookings) {
+      for (const ts of booking.bookedSlots) {
+        const tsStart = new Date(ts.startTime);
+        const tsEnd = new Date(ts.endTime);
+
+        if (slotStart >= tsStart && slotStart < tsEnd) {
+          bookingUser = booking.bookingUser;
+          break;
+        }
+      }
+      if (bookingUser) break;
     }
 
-    // increment by slot duration
-    slotStart = addMinutes(slotStart, this.slotDurationMinutes);
+    slots.push({
+      startTime: new Date(slotStart),
+      endTime: slotEnd,
+      bookingUser: bookingUser!
+    });
+
+    slotStart = slotEnd;
   }
 
   this.timeSlots = slots;
 }
 
 
+toggleSlot(slot: TimeSlot) {
+  // Don't allow selection of already booked slots
+  if (slot.bookingUser) return;
 
-  toggleSlot(slot: any) {
-    if (slot.booked) return;
-    if (this.selectedSlots.has(slot.key)) {
-      this.selectedSlots.delete(slot.key);
-    } else {
-      this.selectedSlots.add(slot.key);
-    }
+  const key = slot.startTime.toISOString();
+
+  if (this.selectedSlots.has(key)) {
+    this.selectedSlots.delete(key);
+  } else {
+    this.selectedSlots.add(key);
   }
+}
 
 confirmBooking() {
   const sorted = Array.from(this.selectedSlots).sort();
@@ -160,9 +176,9 @@ this.bookingService.registerBooking(booking).subscribe({
 }
 
 
-  isSelected(slotKey: string) {
-    return this.selectedSlots.has(slotKey);
-  }
+isSelected(slot: TimeSlot): boolean {
+  return this.selectedSlots.has(slot.startTime.toISOString());
+}
 
 getSelectedSlotRange(): { start: Date, end: Date } | null {
   if (this.selectedSlots.size === 0) return null;
