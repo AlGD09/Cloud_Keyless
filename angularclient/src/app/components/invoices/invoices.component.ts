@@ -40,9 +40,7 @@ export class InvoicesComponent implements OnInit {
   openDialog(booking: UpcomingBooking): void {
     this.dialog.open(InvoiceDialogComponent, {
       data: booking,
-      width: '800px',
-      height: '90%'
-
+      width: '800px'
     });
   }
 

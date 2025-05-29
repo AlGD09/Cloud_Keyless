@@ -28,9 +28,19 @@
       <div>
         Slots selected:
         <br/>
-        <strong *ngIf="getSelectedSlotRange() as range">
-          {{ range.start | date: 'HH:mm' }} - {{ range.end | date: 'HH:mm' }}
-        </strong>
+        <div *ngIf="getSelectedSlotRange() as range" class="range-columns">
+          <div class="range-column">
+            <strong>{{ range.start | date: 'HH:mm' }}</strong><br/>
+            <small>{{ range.start | date: 'shortDate' }}</small>
+          </div>
+          <div class="range-column">
+            <strong>&#8722;</strong><br/>
+          </div>
+          <div class="range-column">
+            <strong>{{ range.end | date: 'HH:mm' }}</strong><br/>
+            <small>{{ range.end | date: 'shortDate' }}</small>
+          </div>
+        </div>
       </div>
 
       <button (click)="confirmBooking()">Confirm booking</button>

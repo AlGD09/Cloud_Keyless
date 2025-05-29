@@ -19,6 +19,19 @@
   overflow: hidden; /* Prevent scrolling */
 }
 
+.range-columns {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+  justify-content: center;
+}
+
+.range-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .time-grid {
   flex-grow: 1;
   overflow-y: auto;
