@@ -1,0 +1,68 @@
+{
+  "wallboxOwner": "HKA",
+  "wallboxName": "Labor",
+  "startTime": "2025-05-30T15:07:00",
+  "endTime": "2025-05-30T15:10:59",
+  "timeSlots": [
+    {
+      "timeSlot": {
+        "id": 18,
+        "startTime": "2025-05-30T15:07:00",
+        "endTime": "2025-05-30T15:07:59",
+        "bookingTime": "2025-05-30T15:06:19.268108",
+        "cancelledTime": null
+      },
+      "pings": 0
+    },
+    {
+      "timeSlot": {
+        "id": 19,
+        "startTime": "2025-05-30T15:08:00",
+        "endTime": "2025-05-30T15:08:59",
+        "bookingTime": "2025-05-30T15:06:19.268108",
+        "cancelledTime": null
+      },
+      "pings": 1
+    },
+    {
+      "timeSlot": {
+        "id": 20,
+        "startTime": "2025-05-30T15:09:00",
+        "endTime": "2025-05-30T15:09:59",
+        "bookingTime": "2025-05-30T15:06:19.268108",
+        "cancelledTime": null
+      },
+      "pings": 2
+    },
+    {
+      "timeSlot": {
+        "id": 21,
+        "startTime": "2025-05-30T15:10:00",
+        "endTime": "2025-05-30T15:10:59",
+        "bookingTime": "2025-05-30T15:06:19.268108",
+        "cancelledTime": null
+      },
+      "pings": 3
+    }
+  ],
+  "pingsTotal": 6,
+  "pricePerPing": 0.1,
+  "pingPriceTotal": 0.6,
+  "transactions": [
+    {
+      "transaction": {
+        "id": 4,
+        "transactionId": 36,
+        "startWattsPerHour": 624409,
+        "endWattsPerHour": 624436,
+        "startTime": "2025-05-30T15:08:28",
+        "endTime": "2025-05-30T15:10:30"
+      },
+      "wh": 27
+    }
+  ],
+  "whTotal": 27,
+  "pricePerWh": 0.1,
+  "whPriceTotal": 2.7,
+  "priceTotal": 3.3000002
+}
