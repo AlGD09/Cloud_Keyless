@@ -11,7 +11,7 @@ import { SmartphoneComponent } from './components/smartphone/smartphone.componen
 export const routes: Routes = [
   { path: 'users', component: UserListComponent },
   { path: 'adduser', component: UserFormComponent },
-  { path: '', redirectTo: 'book', pathMatch: 'full' },
+  { path: '', redirectTo: 'smartphone', pathMatch: 'full' },
   { path: 'book', component: BookingComponent },
   { path: 'charge', component: ChargingComponent },
   { path: 'invoices', component: InvoicesComponent },
