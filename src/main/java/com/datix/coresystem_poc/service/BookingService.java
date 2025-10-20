@@ -76,6 +76,7 @@ public class BookingService {
 
         List<Booking> bookingsFiltered = bookings.stream()
                 // Only consider bookings where latest endTime has passed
+
                 .filter(b -> {
                     LocalDateTime latestEndTime = findLatestEndTime(b.getBookedSlots());
                     return latestEndTime != null && latestEndTime.isBefore(now);
