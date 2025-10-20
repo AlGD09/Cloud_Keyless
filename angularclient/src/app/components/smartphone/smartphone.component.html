@@ -1,71 +1,83 @@
-<h2>Smartphone Verwaltung</h2>
+<div class="page-container">
 
-<!-- Registrierung -->
-<section>
-  <h3>Registrieren</h3>
-  <form (ngSubmit)="register()">
-    <div>
-      <label>Device ID</label>
-      <input [(ngModel)]="regDeviceId" name="regDeviceId" required />
+  <h1>Smartphone-Verwaltung</h1>
+
+  <!-- Registrierung -->
+  <section class="card">
+    <h2>Registrieren</h2>
+    <form (ngSubmit)="register()" class="form-grid">
+      <label>
+        <span>Device ID</span>
+        <input [(ngModel)]="regDeviceId" name="regDeviceId" required />
+      </label>
+
+      <label>
+        <span>User Name</span>
+        <input [(ngModel)]="regUserName" name="regUserName" required />
+      </label>
+
+      <label>
+        <span>Secret Hash</span>
+        <input [(ngModel)]="regSecretHash" name="regSecretHash" required />
+      </label>
+
+      <button type="submit" class="btn-primary">Registrieren</button>
+    </form>
+  </section>
+
+  <!-- Authentifizierung -->
+  <section class="card">
+    <h2>Authentifizieren / Token anfordern</h2>
+    <form (ngSubmit)="requestToken()" class="form-grid">
+      <label>
+        <span>Device ID</span>
+        <input [(ngModel)]="authDeviceId" name="authDeviceId" required />
+      </label>
+
+      <label>
+        <span>Secret Hash</span>
+        <input [(ngModel)]="authSecretHash" name="authSecretHash" required />
+      </label>
+
+      <button type="submit" class="btn-secondary">Token anfordern</button>
+    </form>
+
+    <div *ngIf="authToken" class="token-box">
+      <span>Auth Token:</span>
+      <code>{{ authToken }}</code>
     </div>
-    <div>
-      <label>User Name</label>
-      <input [(ngModel)]="regUserName" name="regUserName" required />
-    </div>
-    <div>
-      <label>Secret Hash</label>
-      <input [(ngModel)]="regSecretHash" name="regSecretHash" required />
-    </div>
-    <button type="submit">Registrieren</button>
-  </form>
-</section>
+  </section>
 
-<hr />
+  <!-- Liste -->
+  <section class="card">
+    <h2>Registrierte Smartphones</h2>
 
-<!-- Authentifizierung -->
-<section>
-  <h3>Authentifizieren (Token anfordern)</h3>
-  <form (ngSubmit)="requestToken()">
-    <div>
-      <label>Device ID</label>
-      <input [(ngModel)]="authDeviceId" name="authDeviceId" required />
-    </div>
-    <div>
-      <label>Secret Hash</label>
-      <input [(ngModel)]="authSecretHash" name="authSecretHash" required />
-    </div>
-    <button type="submit">Token anfordern</button>
-  </form>
+    <div *ngIf="loading" class="info-text">Lade ...</div>
+    <div *ngIf="errorMsg" class="error-text">{{ errorMsg }}</div>
 
-  <div *ngIf="authToken" style="margin-top:8px;">
-    <strong>Auth Token:</strong> {{ authToken }}
-  </div>
-</section>
+    <table *ngIf="phones?.length" class="data-table">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Device ID</th>
+        <th>User</th>
+        <th>Status</th>
+        <th>Last Seen</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let s of phones">
+        <td>{{ s.id }}</td>
+        <td>{{ s.deviceId }}</td>
+        <td>{{ s.userName }}</td>
+        <td>{{ s.status }}</td>
+        <td>{{ s.lastSeen || '—' }}</td>
+      </tr>
+      </tbody>
+    </table>
 
-<hr />
+    <div *ngIf="!phones?.length && !loading" class="info-text">Keine Geräte vorhanden</div>
+  </section>
 
-<!-- Liste -->
-<section>
-  <h3>Registrierte Smartphones</h3>
-  <div *ngIf="loading">Lade...</div>
-  <div *ngIf="errorMsg" style="color:red">{{ errorMsg }}</div>
+</div>
 
-  <table *ngIf="phones?.length">
-    <thead>
-    <tr>
-      <th>ID</th><th>Device ID</th><th>User</th><th>Status</th><th>Last Seen</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let s of phones">
-      <td>{{ s.id }}</td>
-      <td>{{ s.deviceId }}</td>
-      <td>{{ s.userName }}</td>
-      <td>{{ s.status }}</td>
-      <td>{{ s.lastSeen || '—' }}</td>
-    </tr>
-    </tbody>
-  </table>
-
-  <div *ngIf="!phones?.length && !loading">Keine Geräte vorhanden</div>
-</section>
