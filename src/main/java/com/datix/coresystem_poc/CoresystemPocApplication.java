@@ -19,6 +19,8 @@ import com.datix.coresystem_poc.repository.UserRepository;
 import com.datix.coresystem_poc.repository.WallboxOwnerRepository;
 import com.datix.coresystem_poc.repository.WallboxRepository;
 import com.datix.coresystem_poc.service.SteveService;
+import com.keyless.rexroth.entity.Smartphone;
+import com.keyless.rexroth.repository.SmartphoneRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -123,4 +125,23 @@ public class CoresystemPocApplication {
 //            steveService.triggerRemoteStop("whatever", 1L);
         };
     }
+
+    @Bean
+    CommandLineRunner initSmartphones(SmartphoneRepository repo) {
+        return args -> {
+            if (repo.count() == 0) {
+                Smartphone s = new Smartphone();
+                s.setDeviceId("smph-01-ubuntu");
+                s.setSecretHash("cc03e747a6afbbcbf8be7668acfebee5");
+                s.setUserName("Alejandro");
+                s.setStatus("active");
+                repo.save(s);
+
+                System.out.println("✅ Smartphone-Datensatz in H2 gespeichert.");
+            }
+        };
+    }
+
+
+
 }
