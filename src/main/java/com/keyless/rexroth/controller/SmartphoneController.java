@@ -1,20 +1,20 @@
 package com.keyless.rexroth.controller;
 
 import com.keyless.rexroth.dto.SmartphoneRegistrationDTO;
+import com.keyless.rexroth.entity.Smartphone;
 import com.keyless.rexroth.service.SmartphoneService;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
-
+import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/devices")
 
 
@@ -39,7 +39,20 @@ public class SmartphoneController {
         ));
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<?> registerSmartphone(@RequestBody SmartphoneRegistrationDTO dto) {
+        Smartphone saved = smartphoneService.registerSmartphone(dto.getDeviceId(), dto.getUserName(), dto.getSecretHash());
+        if (saved == null) {
+            return ResponseEntity.badRequest().body("Fehler: Gerät konnte nicht registriert werden.");
+        }
+        return ResponseEntity.ok(saved);
+    }
 
+    @GetMapping("/list")
+    public ResponseEntity<List<Smartphone>> getAllSmartphones() {
+        List<Smartphone> list = smartphoneService.getAllSmartphones();
+        return ResponseEntity.ok(list);
+    }
 
 
 

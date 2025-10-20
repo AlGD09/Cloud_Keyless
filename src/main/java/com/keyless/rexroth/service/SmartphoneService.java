@@ -1,16 +1,12 @@
 package com.keyless.rexroth.service;
 
-
-
-
 import com.keyless.rexroth.repository.SmartphoneRepository;
 import com.keyless.rexroth.entity.Smartphone;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -55,6 +51,12 @@ public class SmartphoneService {
         // Token generieren
         String token = UUID.randomUUID().toString().replace("-", "");
         tokenStore.put(token, deviceId);
+
+        // Zeitstempel aktualisieren
+        device.setLastSeen(java.time.LocalDateTime.now());
+        smartphoneRepository.save(device);
+
+
         return token;
     }
 
@@ -68,17 +70,29 @@ public class SmartphoneService {
         return storedDeviceId != null && storedDeviceId.equals(deviceId);
     }
 
-    public Smartphone registerSmartphone(String deviceId, String userName, String secretHash) {
-        Smartphone smartphone = new Smartphone();
-        smartphone.setDeviceId(deviceId);
-        smartphone.setUserName(userName);
-        smartphone.setSecretHash(secretHash);
-        smartphone.setStatus("active");
 
-        return smartphoneRepository.save(smartphone);
+    public Smartphone registerSmartphone(String deviceId, String userName, String secretHash) {
+        if (deviceId == null || secretHash == null) return null;
+
+        // Prüfen, ob Gerät bereits existiert
+        Smartphone existing = smartphoneRepository.findByDeviceId(deviceId);
+        if (existing != null) {
+            existing.setUserName(userName);
+            existing.setSecretHash(secretHash);
+            existing.setStatus("updated");
+            return smartphoneRepository.save(existing);
+        }
+
+        Smartphone s = new Smartphone();
+        s.setDeviceId(deviceId);
+        s.setUserName(userName);
+        s.setSecretHash(secretHash);
+        s.setStatus("active");
+        s.setLastSeen(java.time.LocalDateTime.now());
+        return smartphoneRepository.save(s);
     }
 
-    public Iterable<Smartphone> getAllSmartphones() {
+    public List<Smartphone> getAllSmartphones() {
         return smartphoneRepository.findAll();
     }
 

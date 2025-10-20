@@ -1,0 +1,71 @@
+<h2>Smartphone Verwaltung</h2>
+
+<!-- Registrierung -->
+<section>
+  <h3>Registrieren</h3>
+  <form (ngSubmit)="register()">
+    <div>
+      <label>Device ID</label>
+      <input [(ngModel)]="regDeviceId" name="regDeviceId" required />
+    </div>
+    <div>
+      <label>User Name</label>
+      <input [(ngModel)]="regUserName" name="regUserName" required />
+    </div>
+    <div>
+      <label>Secret Hash</label>
+      <input [(ngModel)]="regSecretHash" name="regSecretHash" required />
+    </div>
+    <button type="submit">Registrieren</button>
+  </form>
+</section>
+
+<hr />
+
+<!-- Authentifizierung -->
+<section>
+  <h3>Authentifizieren (Token anfordern)</h3>
+  <form (ngSubmit)="requestToken()">
+    <div>
+      <label>Device ID</label>
+      <input [(ngModel)]="authDeviceId" name="authDeviceId" required />
+    </div>
+    <div>
+      <label>Secret Hash</label>
+      <input [(ngModel)]="authSecretHash" name="authSecretHash" required />
+    </div>
+    <button type="submit">Token anfordern</button>
+  </form>
+
+  <div *ngIf="authToken" style="margin-top:8px;">
+    <strong>Auth Token:</strong> {{ authToken }}
+  </div>
+</section>
+
+<hr />
+
+<!-- Liste -->
+<section>
+  <h3>Registrierte Smartphones</h3>
+  <div *ngIf="loading">Lade...</div>
+  <div *ngIf="errorMsg" style="color:red">{{ errorMsg }}</div>
+
+  <table *ngIf="phones?.length">
+    <thead>
+    <tr>
+      <th>ID</th><th>Device ID</th><th>User</th><th>Status</th><th>Last Seen</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let s of phones">
+      <td>{{ s.id }}</td>
+      <td>{{ s.deviceId }}</td>
+      <td>{{ s.userName }}</td>
+      <td>{{ s.status }}</td>
+      <td>{{ s.lastSeen || '—' }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!phones?.length && !loading">Keine Geräte vorhanden</div>
+</section>
