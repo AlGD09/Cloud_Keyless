@@ -96,6 +96,23 @@ public class SmartphoneService {
         return smartphoneRepository.findAll();
     }
 
+    public String getTokenForSmartphone(Long smartphoneId) {
+        Smartphone device = smartphoneRepository.findById(smartphoneId).orElse(null);
+        if (device == null) return null;
+
+        // Suche in tokenStore nach dem zugehörigen Token
+        for (Map.Entry<String, String> entry : tokenStore.entrySet()) {
+            if (entry.getValue().equals(device.getDeviceId())) {
+                return entry.getKey(); // Token gefunden
+            }
+        }
+
+        return null; // Kein Token aktiv
+    }
+
 
 
 }
+
+
+
