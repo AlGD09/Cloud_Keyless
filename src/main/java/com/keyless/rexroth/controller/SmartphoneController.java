@@ -54,6 +54,17 @@ public class SmartphoneController {
         return ResponseEntity.ok(list);
     }
 
+    @GetMapping("/token/{smartphoneId}")
+    public ResponseEntity<?> getSmartphoneToken(@PathVariable Long smartphoneId) {
+        String token = smartphoneService.getTokenForSmartphone(smartphoneId);
+
+        if (token == null) {
+            return ResponseEntity.status(404).body(Map.of("message", "Kein aktiver Token gefunden."));
+        }
+
+        return ResponseEntity.ok(Map.of("auth_token", token));
+    }
+
 
 
 }
