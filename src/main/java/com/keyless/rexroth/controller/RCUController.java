@@ -44,6 +44,20 @@ public class RCUController {
         return ResponseEntity.ok(rcuService.getAllRcus());
     }
 
+    @GetMapping("/{id}/smartphones")
+    public ResponseEntity<?> getAssignedSmartphone(@PathVariable Long id) {
+        RCU rcu = rcuService.getRcuById(id);
+        if (rcu == null) {
+            return ResponseEntity.status(404).body("RCU nicht gefunden");
+        }
+
+        if (rcu.getAssignedSmartphone() == null) {
+            return ResponseEntity.ok("Keine Smartphones zugewiesen");
+        }
+
+        return ResponseEntity.ok(rcu.getAssignedSmartphone());
+    }
+
 
 
 
