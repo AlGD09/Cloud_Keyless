@@ -6,6 +6,9 @@ import { BookingComponent } from './components/booking/booking.component';
 import { ChargingComponent } from './components/charging/charging.component';
 import { InvoicesComponent } from './components/invoices/invoices.component';
 import { SmartphoneComponent } from './components/smartphone/smartphone.component';
+import { RcuComponent } from './components/rcu/rcu.component';
+import { RcuAssignComponent } from './components/rcu/rcu-assign.component';
+
 
 
 export const routes: Routes = [
@@ -16,6 +19,8 @@ export const routes: Routes = [
   { path: 'charge', component: ChargingComponent },
   { path: 'invoices', component: InvoicesComponent },
   { path: 'smartphone', component: SmartphoneComponent },
+  { path: 'rcu', component: RcuComponent},
+  { path: 'rcu/assign', component: RcuAssignComponent}
 ];
 
 // @NgModule({

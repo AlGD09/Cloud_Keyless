@@ -1,0 +1,22 @@
+<div class="page-container">
+  <h1>Smartphone zuweisen</h1>
+  <p>RCU: <strong>{{ rcuName }}</strong></p>
+
+  <section class="card">
+    <form (ngSubmit)="assign()" class="form-grid">
+      <label>
+        <span>Smartphone auswählen</span>
+        <select [(ngModel)]="selectedSmartphoneId" name="selectedSmartphoneId">
+          <option [ngValue]="null">-- auswählen --</option>
+          <option *ngFor="let s of smartphones" [ngValue]="s.id">
+            {{ s.userName }} – {{ s.deviceId }}
+          </option>
+        </select>
+      </label>
+
+      <button type="submit" class="btn-secondary">Zuweisen</button>
+    </form>
+
+    <div *ngIf="message" class="info-text">{{ message }}</div>
+  </section>
+</div>

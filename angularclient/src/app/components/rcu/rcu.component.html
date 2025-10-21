@@ -1,0 +1,26 @@
+<div class="page-container">
+  <h1>RCU-Registrierung</h1>
+
+  <section class="card">
+    <form (ngSubmit)="register()" class="form-grid">
+      <label>
+        <span>RCU-ID</span>
+        <input [(ngModel)]="rcuId" name="rcuId" required />
+      </label>
+
+      <label>
+        <span>Name</span>
+        <input [(ngModel)]="name" name="name" required />
+      </label>
+
+      <label>
+        <span>Ort</span>
+        <input [(ngModel)]="location" name="location" />
+      </label>
+
+      <button type="submit" class="btn-primary">RCU registrieren</button>
+    </form>
+
+    <div *ngIf="message" class="info-text">{{ message }}</div>
+  </section>
+</div>

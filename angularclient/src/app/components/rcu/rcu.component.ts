@@ -1,0 +1,46 @@
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { RcuService } from '../../services/rcu.service';
+import { SmartphoneService } from '../../services/smartphone.service';
+import { Rcu } from '../../model/rcu';
+
+
+@Component({
+  selector: 'app-rcu',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './rcu.component.html',
+  styleUrls: ['./rcu.component.scss']
+})
+export class RcuComponent {
+  rcuId = '';
+  name = '';
+  location = '';
+  message = '';
+
+  constructor(private rcuService: RcuService, private router: Router) {}
+
+  register(): void {
+    if (!this.rcuId || !this.name) {
+      this.message = 'Bitte ID und Name eingeben.';
+      return;
+    }
+
+    const newRcu: Rcu = { rcuId: this.rcuId, name: this.name, location: this.location };
+    this.rcuService.registerRcu(newRcu).subscribe({
+      next: rcu => {
+        this.message = 'RCU erfolgreich registriert!';
+        this.rcuId = '';
+        this.name = '';
+        this.location = '';
+        // 🔹 Nach erfolgreicher Registrierung weiterleiten zur Zuweisungsseite
+        this.router.navigate(['/rcu/assign'], { queryParams: { id: rcu.id, name: rcu.name } });
+      },
+      error: err => {
+        this.message = err.error?.message || 'Fehler bei der Registrierung.';
+      }
+    });
+  }
+}

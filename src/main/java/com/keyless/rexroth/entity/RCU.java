@@ -5,7 +5,8 @@ import jakarta.persistence.Entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -27,6 +28,10 @@ public class RCU {
     @ManyToOne
     @JoinColumn(name = "smartphone_id")
     private Smartphone assignedSmartphone;
+
+    //@OneToMany
+    //@JoinColumn(name = "rcu_id")
+    //private List<Smartphone> allowedSmartphones = new ArrayList<>();
 
     public RCU() {
         this.registeredAt = LocalDateTime.now();
