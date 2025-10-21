@@ -48,8 +48,8 @@ public class RCUService {
         return rcuRepository.save(rcu);
     }
 
-    public RCU getRcuByRcuId(Long id) {
-        return rcuRepository.findByRcuId(rcuId).orElse(null);
+    public RCU getRcuByRcuId(String rcuId) {
+        return rcuRepository.findByRcuId(rcuId);
     }
 
 
