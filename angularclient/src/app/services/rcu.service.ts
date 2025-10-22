@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { Rcu } from '../model/rcu';
 import { Smartphone } from '../model/smartphone';
+import { Subject } from 'rxjs';
 
 
 @Injectable({
@@ -12,6 +13,10 @@ import { Smartphone } from '../model/smartphone';
 export class RcuService {
 
   private baseUrl: string;
+
+  private refreshRequested = new Subject<void>();
+  refreshRequested$ = this.refreshRequested.asObservable();
+
   constructor(private http: HttpClient) {
         this.baseUrl = 'http://localhost:8080/api/rcu';
   }
@@ -34,6 +39,10 @@ getAssignedSmartphone(rcuId: number): Observable<Smartphone> {
 
 deleteRcu(id: number) {
     return this.http.delete(`${this.baseUrl}/delete/${id}`);
+}
+
+requestRefresh(): void {
+    this.refreshRequested.next();
 }
 
 

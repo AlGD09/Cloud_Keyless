@@ -34,10 +34,14 @@ export class RcuAssignComponent implements OnInit {
       this.rcuName = params['name'];
     });
 
-    this.smartphoneService.getAll().subscribe({
-      next: data => this.smartphones = data,
-      error: () => this.message = 'Fehler beim Laden der Smartphones.'
-    });
+    this.loadSmartphones();
+  }
+
+  loadSmartphones(): void {
+      this.smartphoneService.getAll().subscribe({
+        next: (data: any[]) => this.smartphones = data,
+        error: () => this.message = 'Fehler beim Laden der Smartphones.'
+      });
   }
 
   assign(): void {
@@ -49,6 +53,7 @@ export class RcuAssignComponent implements OnInit {
     this.rcuService.assignSmartphone(this.rcuId, this.selectedSmartphoneId).subscribe({
       next: _ => {
         this.message = 'Smartphone erfolgreich zugewiesen!';
+        this.rcuService.requestRefresh();
         setTimeout(() => this.router.navigate(['/rcu']), 1200);
       },
       error: () => this.message = 'Zuweisung fehlgeschlagen.'

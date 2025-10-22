@@ -26,6 +26,10 @@ export class RcuComponent {
 
   ngOnInit(): void {
       this.loadRcus();
+      this.rcuService.refreshRequested$.subscribe(() => {
+          this.loadRcus();
+      });
+
     }
 
   register(): void {
