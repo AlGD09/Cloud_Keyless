@@ -20,7 +20,13 @@ export class RcuComponent {
   location = '';
   message = '';
 
+  rcus: Rcu[] = [];
+
   constructor(private rcuService: RcuService, private router: Router) {}
+
+  ngOnInit(): void {
+      this.loadRcus();
+    }
 
   register(): void {
     if (!this.rcuId || !this.name) {
@@ -43,4 +49,47 @@ export class RcuComponent {
       }
     });
   }
+  loadRcus(): void {
+    this.rcuService.getAllRcus().subscribe({
+      next: (data: Rcu[]) => {
+        this.rcus = data;
+
+
+        this.rcus.forEach(rcu => {
+          if (rcu.id) {
+            this.rcuService.getAssignedSmartphone(rcu.id).subscribe({
+              next: (smartphone) => {
+                rcu.smartphones = smartphone; //
+              },
+              error: () => {
+                rcu.smartphones = undefined; // Kein Problem, wenn keine Zuordnung existiert
+              }
+            });
+          }
+        });
+      },
+      error: () => {
+        this.message = 'Fehler beim Laden der RCUs.';
+      }
+    });
+  }
+
+  deleteRcu(id: number): void {
+      if (confirm('Willst du diese RCU wirklich löschen?')) {
+        this.rcuService.deleteRcu(id).subscribe({
+          next: () => {
+            this.loadRcus(); // Nach dem Löschen neu laden
+          },
+          error: () => {
+            this.message = 'Fehler beim Löschen der RCU.';
+          }
+        });
+      }
+  }
+
+
+
+
+
+
 }

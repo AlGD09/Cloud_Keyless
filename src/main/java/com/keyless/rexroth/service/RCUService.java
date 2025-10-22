@@ -58,8 +58,12 @@ public class RCUService {
         return rcuRepository.findByRcuId(rcuId);
     }
 
+    public void deleteRcu(Long id) {
+        if (rcuRepository.existsById(id)) {
+            rcuRepository.deleteById(id);
+        }
 
 
-
+    }
 
 }

@@ -58,6 +58,12 @@ public class RCUController {
         return ResponseEntity.ok(rcu.getAssignedSmartphone());
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteRcu(@PathVariable Long id) {
+        rcuService.deleteRcu(id);
+        return ResponseEntity.noContent().build();
+    }
+
 
 
 

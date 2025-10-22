@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { Rcu } from '../model/rcu';
-
+import { Smartphone } from '../model/smartphone';
 
 
 @Injectable({
@@ -20,7 +20,7 @@ registerRcu(rcu: Rcu): Observable<Rcu> {
     return this.http.post<Rcu>(`${this.baseUrl}/register`, rcu);
 }
 
-getAll(): Observable<Rcu[]> {
+getAllRcus(): Observable<Rcu[]> {
     return this.http.get<Rcu[]>(`${this.baseUrl}/list`);
 }
 
@@ -28,8 +28,12 @@ assignSmartphone(rcuId: number, smartphoneId: number): Observable<Rcu> {
     return this.http.post<Rcu>(`${this.baseUrl}/assign`, { rcuId, smartphoneId });
 }
 
-getAssignedSmartphone(rcuId: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${rcuId}/smartphones`);
+getAssignedSmartphone(rcuId: number): Observable<Smartphone> {
+    return this.http.get<Smartphone>(`${this.baseUrl}/${rcuId}/smartphones`);
+}
+
+deleteRcu(id: number) {
+    return this.http.delete(`${this.baseUrl}/delete/${id}`);
 }
 
 

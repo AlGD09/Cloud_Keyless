@@ -24,3 +24,34 @@
     <div *ngIf="message" class="info-text">{{ message }}</div>
   </section>
 </div>
+
+<h2>Registrierte RCUs</h2>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>RCU-ID</th>
+    <th>Zugeordnetes Smartphone</th>
+    <th>Aktionen</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let rcu of rcus">
+    <td>{{ rcu.id }}</td>
+    <td>{{ rcu.rcuId }}</td>
+    <td>
+      <span *ngIf="rcu.smartphones; else none">
+          {{ rcu.smartphones.userName }} ({{ rcu.smartphones.deviceId }})
+        </span>
+      <ng-template #none>
+        <span class="text-muted">Kein Smartphone zugewiesen</span>
+      </ng-template>
+    </td>
+    <td>
+      <button class="btn btn-danger" (click)="deleteRcu(rcu.id!)">Löschen</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
