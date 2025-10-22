@@ -44,6 +44,12 @@ public class RCUService {
             return null;
         }
 
+        // Alte Zuordnung entfernen, falls ein anderes Smartphone bereits zugewiesen ist
+        if (rcu.getAssignedSmartphone() != null && !rcu.getAssignedSmartphone().getId().equals(smartphoneId)) {
+            System.out.println("Alte Smartphone-Zuweisung wird überschrieben für RCU " + rcu.getRcuId());
+        }
+
+
         rcu.setAssignedSmartphone(smartphone);
         return rcuRepository.save(rcu);
     }
