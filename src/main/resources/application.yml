@@ -16,6 +16,10 @@ spring:
         ddl-auto: update
       spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
 
+server:
+  address: 0.0.0.0
+  port: 8080
+
 #Environment variables
 timeslot:
   length: ${ENV_TIMESLOT_LENGTH:15}
