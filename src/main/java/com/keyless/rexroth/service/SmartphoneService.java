@@ -47,6 +47,8 @@ public class SmartphoneService {
             return null;
         }
 
+        tokenStore.values().removeIf(id -> id.equals(deviceId));
+
 
         // Token generieren
         String token = UUID.randomUUID().toString().replace("-", "");
