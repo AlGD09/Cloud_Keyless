@@ -1,5 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 .mat-datepicker-content {
   background-color: white !important;
   box-shadow: 0 5px 5px -3px rgba(0,0,0,0.2),
