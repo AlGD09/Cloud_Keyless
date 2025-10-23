@@ -14,24 +14,28 @@
     <!-- Smartphones -->
     <section class="bg-white shadow-sm rounded-2xl p-6 border border-gray-100">
       <h2 class="text-xl font-medium text-gray-800 mb-4">Smartphones</h2>
-      <table *ngIf="smartphones?.length" class="w-full text-sm text-left border-t border-gray-200">
-        <thead class="bg-gray-50 text-gray-600 text-xs uppercase">
-        <tr>
-          <th class="px-4 py-2">ID</th>
-          <th class="px-4 py-2">Device ID</th>
-          <th class="px-4 py-2">User</th>
-          <th class="px-4 py-2">Status</th>
-        </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-100">
-        <tr *ngFor="let s of smartphones" class="hover:bg-blue-50 transition">
-          <td class="px-4 py-2">{{ s.id }}</td>
-          <td class="px-4 py-2">{{ s.deviceId }}</td>
-          <td class="px-4 py-2">{{ s.userName }}</td>
-          <td class="px-4 py-2">{{ s.status }}</td>
-        </tr>
-        </tbody>
-      </table>
+      <div class="overflow-x-auto">
+        <table *ngIf="smartphones?.length" class="w-full text-sm text-left border-t border-gray-200">
+          <thead class="bg-gray-50 text-gray-600 text-xs uppercase">
+          <tr>
+            <th class="px-4 py-2">ID</th>
+            <th class="px-4 py-2">Device ID</th>
+            <th class="px-4 py-2">User</th>
+            <th class="px-4 py-2">Status</th>
+            <th class="px-4 py-2">Last Seen</th>
+          </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+          <tr *ngFor="let s of smartphones" class="hover:bg-blue-50 transition">
+            <td class="px-4 py-2">{{ s.id }}</td>
+            <td class="px-4 py-2">{{ s.deviceId }}</td>
+            <td class="px-4 py-2">{{ s.userName }}</td>
+            <td class="px-4 py-2">{{ s.status }}</td>
+            <td class="px-4 py-2">{{ s.lastSeen || '—' }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
       <div *ngIf="!smartphones?.length && !loading" class="text-gray-500 italic mt-2">
         Keine Smartphones vorhanden
       </div>
