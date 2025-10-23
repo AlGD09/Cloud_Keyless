@@ -17,6 +17,9 @@ export class HomeComponent {
   // RCUs
   rcus: Rcu[] = [];
 
+  assignments: { rcuId: string; rcuName: string; smartphones: Smartphone[] }[] = [];
+
+
   // Status
   loading = false;
   errorMsg = '';
@@ -48,6 +51,30 @@ export class HomeComponent {
     this.rcuService.getAllRcus().subscribe({
       next: (data: Rcu[]) => {
         this.rcus = data;
+
+        this.assignments = [];
+              this.rcus.forEach(rcu => {
+                if (rcu.id) {
+                  this.rcuService.getAssignedSmartphone(rcu.rcuId).subscribe({
+                    next: (smartphone: Smartphone | null) => {
+                      // Prüfen, ob gültiges Smartphone-Objekt vorhanden ist
+                      const assigned = smartphone && smartphone.deviceId ? [smartphone] : [];
+                      this.assignments.push({
+                        rcuId: rcu.rcuId || '–',
+                        rcuName: rcu.name || '–',
+                        smartphones: assigned
+                      });
+                    },
+                    error: () => {
+                      this.assignments.push({
+                        rcuId: rcu.rcuId || '–',
+                        rcuName: rcu.name || '–',
+                        smartphones: []
+                      });
+                    }
+                  });
+                }
+              });
       },
       error: (err: any) => {
         this.errorMsg = err.message || 'Fehler beim Laden der RCUs';

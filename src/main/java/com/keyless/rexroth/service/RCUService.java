@@ -62,8 +62,6 @@ public class RCUService {
         if (rcuRepository.existsById(id)) {
             rcuRepository.deleteById(id);
         }
-
-
     }
 
 }

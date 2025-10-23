@@ -57,7 +57,7 @@ export class RcuComponent {
 
         this.rcus.forEach(rcu => {
           if (rcu.id) {
-            this.rcuService.getAssignedSmartphone(rcu.id).subscribe({
+            this.rcuService.getAssignedSmartphone(rcu.rcuId).subscribe({
               next: (smartphone) => {
                 rcu.smartphones = smartphone; //
               },

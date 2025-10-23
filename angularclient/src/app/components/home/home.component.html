@@ -83,4 +83,49 @@
       </div>
     </section>
   </div>
+
+  <!-- Zuweisungen -->
+  <section class="bg-white shadow-sm rounded-2xl p-6 border border-gray-100 mt-8 w-full">
+    <h2 class="text-xl font-medium text-gray-800 mb-4">
+      Smartphone-Zuweisungen pro RCU
+    </h2>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm text-left border-t border-gray-200 min-w-[650px]">
+        <thead class="bg-gray-50 text-gray-600 text-xs uppercase">
+        <tr>
+          <th class="px-4 py-2">RCU-ID</th>
+          <th class="px-4 py-2">RCU-Name</th>
+          <th class="px-4 py-2">Zugewiesene Smartphones</th>
+        </tr>
+        </thead>
+
+        <tbody class="divide-y divide-gray-100">
+        <tr
+          *ngFor="let a of assignments"
+          class="hover:bg-blue-50 transition text-gray-700 align-top"
+        >
+          <td class="px-4 py-2 whitespace-nowrap font-medium">
+            {{ a.rcuId }}
+          </td>
+          <td class="px-4 py-2">{{ a.rcuName }}</td>
+          <td class="px-4 py-2">
+            <ng-container *ngIf="a.smartphones.length; else none">
+              <ul class="list-disc list-inside">
+                <li *ngFor="let s of a.smartphones">
+                  {{ s.deviceId }} — {{ s.userName }}
+                </li>
+              </ul>
+            </ng-container>
+
+            <ng-template #none>
+              <span class="text-gray-500 italic">Keine Smartphones zugewiesen</span>
+            </ng-template>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
 </div>

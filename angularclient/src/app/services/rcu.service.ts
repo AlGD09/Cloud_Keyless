@@ -28,7 +28,7 @@ assignSmartphone(rcuId: number, smartphoneId: number): Observable<Rcu> {
     return this.http.post<Rcu>(`${this.baseUrl}/assign`, { rcuId, smartphoneId });
 }
 
-getAssignedSmartphone(rcuId: number): Observable<Smartphone> {
+getAssignedSmartphone(rcuId: string): Observable<Smartphone> {
     return this.http.get<Smartphone>(`${this.baseUrl}/${rcuId}/smartphones`);
 }
 
