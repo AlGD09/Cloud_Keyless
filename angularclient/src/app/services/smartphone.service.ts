@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Smartphone } from '../model/smartphone';
 import { Observable } from 'rxjs/internal/Observable';
-import { Invoice } from '../model/invoice';
 
 
 @Injectable({
