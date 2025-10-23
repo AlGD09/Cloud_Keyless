@@ -2,8 +2,20 @@
   <!-- Sidebar -->
   <aside class="w-64 bg-white shadow-lg flex flex-col justify-between">
     <div class="p-6">
-      <h2 class="text-2xl font-bold text-blue-600 mb-8">Keyless Cloud</h2>
+      <div class="flex items-center gap-2 mb-8">
+        <img src="/assets/cloud-icon.png" alt="Keyless Icon" class="w-8 h-8" />
+        <h2 class="text-2xl font-bold text-blue-600">Keyless Cloud</h2>
+      </div>
       <nav class="space-y-2">
+        <a
+          routerLink="/home"
+          routerLinkActive="bg-blue-50 text-blue-600"
+          class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-blue-50 transition"
+        >
+          <span class="text-lg"> </span>
+          <span class="font-medium">Home</span>
+        </a>
+
         <a
           routerLink="/smartphone"
           routerLinkActive="bg-blue-50 text-blue-600"

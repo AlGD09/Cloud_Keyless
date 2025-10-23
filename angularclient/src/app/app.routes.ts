@@ -8,13 +8,15 @@ import { InvoicesComponent } from './components/invoices/invoices.component';
 import { SmartphoneComponent } from './components/smartphone/smartphone.component';
 import { RcuComponent } from './components/rcu/rcu.component';
 import { RcuAssignComponent } from './components/rcu/rcu-assign.component';
+import { HomeComponent } from './components/home/home.component';
 
 
 
 export const routes: Routes = [
   { path: 'users', component: UserListComponent },
   { path: 'adduser', component: UserFormComponent },
-  { path: '', redirectTo: 'smartphone', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'book', component: BookingComponent },
   { path: 'charge', component: ChargingComponent },
   { path: 'invoices', component: InvoicesComponent },
