@@ -1,12 +1,36 @@
-<nav>
-  <ul>
-    <!-- <li><a routerLink="/book" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Book</a></li>
-    <li><a routerLink="/charge" routerLinkActive="active">Charge</a></li>
-    <li><a routerLink="/invoices" routerLinkActive="active">Invoices</a></li> -->
-    <li><a routerLink="/smartphone" routerLinkActive="active">Smartphone</a></li>
-    <li><a routerLink="/rcu" routerLinkActive="active">RCUs</a></li>
-  </ul>
-</nav>
+<div class="flex h-screen bg-gray-50 text-gray-800">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white shadow-lg flex flex-col justify-between">
+    <div class="p-6">
+      <h2 class="text-2xl font-bold text-blue-600 mb-8">Keyless Cloud</h2>
+      <nav class="space-y-2">
+        <a
+          routerLink="/smartphone"
+          routerLinkActive="bg-blue-50 text-blue-600"
+          class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-blue-50 transition"
+        >
+          <span class="text-lg"> </span>
+          <span class="font-medium">Smartphones</span>
+        </a>
 
-<!-- Where routed content will be displayed -->
-<router-outlet></router-outlet>
+        <a
+          routerLink="/rcu"
+          routerLinkActive="bg-blue-50 text-blue-600"
+          class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-blue-50 transition"
+        >
+          <span class="text-lg"> </span>
+          <span class="font-medium">RCUs</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="p-4 text-center border-t border-gray-100 text-sm text-gray-500">
+      © 2025 Keyless
+    </div>
+  </aside>
+
+  <!-- Hauptinhalt -->
+  <main class="flex-1 overflow-y-auto p-8">
+    <router-outlet></router-outlet>
+  </main>
+</div>
