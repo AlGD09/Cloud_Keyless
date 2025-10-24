@@ -30,9 +30,12 @@ requestToken(deviceId: string, secretHash: string): Observable<{ auth_token: str
 }
 
 deleteSmartphone(id: number) {
-    return this.http.delete(`${this.baseUrl}/delete/${id}`);
+  return this.http.delete(`${this.baseUrl}/delete/${id}`);
 }
 
+unassignSmartphone(rcuId: string, smartphoneId: number) {
+  return this.http.post(`${this.baseUrl}/unassign`, { rcuId, smartphoneId });
+}
 
 
   }

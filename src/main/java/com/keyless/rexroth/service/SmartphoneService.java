@@ -139,7 +139,14 @@ public class SmartphoneService {
         }
     }
 
+    public void unassignSmartphone(String rcuId, Long smartphoneId){
+        RCU device = rcuRepository.findByRcuId(rcuId);
 
+        device.unassignSmartphone();
+        rcuRepository.save(device);
+
+
+    }
 }
 
 

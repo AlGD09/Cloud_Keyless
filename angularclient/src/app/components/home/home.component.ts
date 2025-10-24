@@ -116,5 +116,18 @@ export class HomeComponent {
     this.router.navigate(['/rcu/assign'], { queryParams: { id: id, name: name } });
   }
 
+  unassign(rcuId: string, smartphoneId: number): void{
+    this.smartphoneService.unassignSmartphone(rcuId, smartphoneId).subscribe({
+      next: () => {
+        this.loadData(); // Nach dem Löschen neu laden
+      },
+      error: () => {
+        this.errorMsg = 'Fehler beim Entfernen der Smartphonezuweisung.';
+      }
+
+    });
+
+  }
+
 
 }

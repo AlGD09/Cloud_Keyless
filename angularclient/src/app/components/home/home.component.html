@@ -131,10 +131,19 @@
           </td>
           <td class="px-4 py-2">{{ a.rcuName }}</td>
           <td class="px-4 py-2">
+
             <ng-container *ngIf="a.smartphones.length; else none">
-              <ul class="list-disc list-inside">
+              <ul class="list-inside">
                 <li *ngFor="let s of a.smartphones">
+                  <div class="flex items-center gap-2">
                   {{ s.deviceId }} — {{ s.userName }}
+                  <button
+                    class="px-3 py-1 text-sm rounded-md bg-blue-600 text-white hover:bg-blue-700 transition"
+                    (click)="unassign(a.rcuName!, s.id!)"
+                  >
+                    Unassign
+                  </button>
+                  </div>
                 </li>
               </ul>
             </ng-container>

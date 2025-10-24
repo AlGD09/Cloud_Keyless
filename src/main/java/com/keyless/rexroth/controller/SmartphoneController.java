@@ -1,8 +1,10 @@
 package com.keyless.rexroth.controller;
 
 import com.keyless.rexroth.dto.SmartphoneRegistrationDTO;
+import com.keyless.rexroth.dto.SmartphoneUnassignDTO;
 import com.keyless.rexroth.entity.Smartphone;
 import com.keyless.rexroth.service.SmartphoneService;
+import com.keyless.rexroth.entity.RCU;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +70,14 @@ public class SmartphoneController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteSmartphone(@PathVariable Long id) {
         smartphoneService.deleteSmartphone(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/unassign")
+    public ResponseEntity<Void> unassignSmartphone(@RequestBody SmartphoneUnassignDTO dto) {
+        smartphoneService.unassignSmartphone(dto.getRcuId(), dto.getSmartphoneId());
+        System.out.println("🔍 DTO.rcuId = " + dto.getRcuId());
+        System.out.println("🔍 DTO.smartphoneId = " + dto.getSmartphoneId());
         return ResponseEntity.noContent().build();
     }
 
