@@ -39,7 +39,7 @@ public class CoresystemPocApplication {
         return args -> {
             if (repo.count() == 0) {
                 Smartphone s = new Smartphone();
-                s.setDeviceId("smph-01-ubuntu");
+                s.setDeviceId("9e4a6c41b203d8a7");
                 s.setSecretHash("cc03e747a6afbbcbf8be7668acfebee5");
                 s.setUserName("Alejandro");
                 s.setStatus("active");
