@@ -29,6 +29,9 @@ requestToken(deviceId: string, secretHash: string): Observable<{ auth_token: str
   return this.http.post<{ auth_token: string }>(`${this.baseUrl}/request`, { deviceId, secretHash });
 }
 
+deleteSmartphone(id: number) {
+    return this.http.delete(`${this.baseUrl}/delete/${id}`);
+}
 
 
 

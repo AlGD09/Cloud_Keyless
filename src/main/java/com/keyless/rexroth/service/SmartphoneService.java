@@ -1,5 +1,7 @@
 package com.keyless.rexroth.service;
 
+import com.keyless.rexroth.entity.RCU;
+import com.keyless.rexroth.repository.RCURepository;
 import com.keyless.rexroth.repository.SmartphoneRepository;
 import com.keyless.rexroth.entity.Smartphone;
 
@@ -17,6 +19,9 @@ public class SmartphoneService {
 
     @Autowired
     private SmartphoneRepository smartphoneRepository;
+
+    @Autowired
+    private RCURepository rcuRepository;
 
     // Feste Testgeräte (deviceId → secretHash)
     //private final Map<String, String> registeredDevices = new HashMap<>();
@@ -112,6 +117,27 @@ public class SmartphoneService {
         return null; // Kein Token aktiv
     }
 
+    public void deleteSmartphone(Long id) {
+        if (smartphoneRepository.existsById(id)) {
+
+            // Alle RCUs abrufen
+            List<RCU> rcuList = rcuRepository.findAll();
+
+            // Prüfen, ob eine RCU das Smartphone zugewiesen hat
+            for (RCU rcu : rcuList) {
+                if (rcu.getAssignedSmartphone() != null &&
+                        rcu.getAssignedSmartphone().getId().equals(id)) {
+
+                    // Smartphone-Zuweisung aufheben
+                    rcu.unassignSmartphone();
+                    rcuRepository.save(rcu); // Änderung speichern
+                }
+            }
+
+            // Smartphone aus Repository löschen
+            smartphoneRepository.deleteById(id);
+        }
+    }
 
 
 }

@@ -56,4 +56,10 @@ public class RCU {
 
     public Smartphone getAssignedSmartphone() { return assignedSmartphone; }
     public void setAssignedSmartphone(Smartphone assignedSmartphone) { this.assignedSmartphone = assignedSmartphone; }
+
+    public void unassignSmartphone() { this.assignedSmartphone = null; }
+
+    public boolean hasAssignedSmartphone() { return this.assignedSmartphone != null; }
+
+
 }

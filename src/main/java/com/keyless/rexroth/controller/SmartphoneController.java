@@ -65,6 +65,14 @@ public class SmartphoneController {
         return ResponseEntity.ok(Map.of("auth_token", token));
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteSmartphone(@PathVariable Long id) {
+        smartphoneService.deleteSmartphone(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
+
 
 
 }

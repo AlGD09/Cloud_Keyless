@@ -95,5 +95,18 @@ export class HomeComponent {
     }
   }
 
+  deleteSmartphone(id: number): void {
+    if (confirm('Willst du dieses Smartphone wirklich löschen?')) {
+      this.smartphoneService.deleteSmartphone(id).subscribe({
+        next: () => {
+          this.loadData(); // Nach dem Löschen neu laden
+        },
+        error: () => {
+          this.errorMsg = 'Fehler beim Löschen des Smartphones.';
+        }
+      });
+    }
+  }
+
 
 }
