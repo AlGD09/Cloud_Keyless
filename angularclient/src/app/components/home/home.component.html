@@ -140,7 +140,15 @@
             </ng-container>
 
             <ng-template #none>
-              <span class="text-gray-500 italic">Keine Smartphones zugewiesen</span>
+              <div class="flex items-center gap-2">
+                <span class="text-gray-500 italic">Keine Smartphones zugewiesen</span>
+                <button
+                  class="px-3 py-1 text-sm rounded-md bg-blue-600 text-white hover:bg-blue-700 transition"
+                  (click)="openAssignPage(a.rid!, a.rcuName!)"
+                >
+                  Assign
+                </button>
+              </div>
             </ng-template>
           </td>
         </tr>

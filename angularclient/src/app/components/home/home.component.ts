@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { SmartphoneService } from '../../services/smartphone.service';
 import { RcuService } from '../../services/rcu.service';
 import { Smartphone } from '../../model/smartphone';
@@ -17,7 +18,7 @@ export class HomeComponent {
   // RCUs
   rcus: Rcu[] = [];
 
-  assignments: { rcuId: string; rcuName: string; smartphones: Smartphone[] }[] = [];
+  assignments: { rid: number; rcuId: string; rcuName: string; smartphones: Smartphone[] }[] = [];
 
 
   // Status
@@ -26,7 +27,8 @@ export class HomeComponent {
 
   constructor(
     private smartphoneService: SmartphoneService,
-    private rcuService: RcuService
+    private rcuService: RcuService,
+    private router: Router
   ) {
     this.loadData();
   }
@@ -60,6 +62,7 @@ export class HomeComponent {
                       // Prüfen, ob gültiges Smartphone-Objekt vorhanden ist
                       const assigned = smartphone && smartphone.deviceId ? [smartphone] : [];
                       this.assignments.push({
+                        rid: rcu.id ?? 0,
                         rcuId: rcu.rcuId || '–',
                         rcuName: rcu.name || '–',
                         smartphones: assigned
@@ -67,6 +70,7 @@ export class HomeComponent {
                     },
                     error: () => {
                       this.assignments.push({
+                        rid: rcu.id ?? 0,
                         rcuId: rcu.rcuId || '–',
                         rcuName: rcu.name || '–',
                         smartphones: []
@@ -106,6 +110,10 @@ export class HomeComponent {
         }
       });
     }
+  }
+
+  openAssignPage(id: number, name: string): void{
+    this.router.navigate(['/rcu/assign'], { queryParams: { id: id, name: name } });
   }
 
 
