@@ -139,14 +139,26 @@ public class SmartphoneService {
         }
     }
 
-    public void unassignSmartphone(String rcuId, Long smartphoneId){
-        RCU device = rcuRepository.findByRcuId(rcuId);
+    public void unassignSmartphone(String rcuId, Long smartphoneId) {
+        RCU rcu = rcuRepository.findByRcuId(rcuId);
+        if (rcu == null) {
+            throw new RuntimeException("RCU not found: " + rcuId);
+        }
 
-        device.unassignSmartphone();
-        rcuRepository.save(device);
+        Smartphone phone = smartphoneRepository.findById(smartphoneId).orElse(null);
+        if (phone == null) {
+            throw new RuntimeException("Smartphone not found: " + smartphoneId);
+        }
 
+        // Zuordnung sicher prüfen, bevor unassigned wird
+        if (rcu.getAssignedSmartphone() != null &&
+                rcu.getAssignedSmartphone().getId().equals(phone.getId())) {
 
+            rcu.unassignSmartphone();
+            rcuRepository.save(rcu);
+        }
     }
+
 }
 
 

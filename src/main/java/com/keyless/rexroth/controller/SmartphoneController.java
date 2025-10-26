@@ -76,8 +76,6 @@ public class SmartphoneController {
     @PostMapping("/unassign")
     public ResponseEntity<Void> unassignSmartphone(@RequestBody SmartphoneUnassignDTO dto) {
         smartphoneService.unassignSmartphone(dto.getRcuId(), dto.getSmartphoneId());
-        System.out.println("🔍 DTO.rcuId = " + dto.getRcuId());
-        System.out.println("🔍 DTO.smartphoneId = " + dto.getSmartphoneId());
         return ResponseEntity.noContent().build();
     }
 
