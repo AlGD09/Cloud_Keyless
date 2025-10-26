@@ -136,7 +136,7 @@
               <ul class="list-inside">
                 <li *ngFor="let s of a.smartphones">
                   <div class="flex items-center gap-2">
-                  {{ s.deviceId }} — {{ s.userName }}
+                  {{ s.deviceId }} - {{ s.userName }}
                   <button
                     class="px-3 py-1 text-sm rounded-md bg-blue-600 text-white hover:bg-blue-700 transition"
                     (click)="unassign(a.rcuId!, s.id!)"
