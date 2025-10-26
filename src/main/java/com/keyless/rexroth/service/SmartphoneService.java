@@ -34,8 +34,8 @@ public class SmartphoneService {
     //}
 
 
-    public String authenticateAndGenerateToken(String deviceId, String secretHash) {
-        if (deviceId == null || secretHash == null) return null;
+    public String authenticateAndGenerateToken(String deviceId, String username, String secretHash) {
+        if (deviceId == null || username==null || secretHash == null) return null;
 
         //String storedHash = registeredDevices.get(deviceId)
         //if (storedHash == null || !storedHash.equals(secretHash)) return null;
@@ -49,6 +49,11 @@ public class SmartphoneService {
 
         if (!secretHash.equals(device.getSecretHash())) {
             System.out.println("❌ Ungültiger SecretHash für Gerät: " + deviceId);
+            return null;
+        }
+
+        if (!username.equals(device.getUserName())) {
+            System.out.println("❌ Username nicht authentifiziert für Gerät: " + deviceId);
             return null;
         }
 

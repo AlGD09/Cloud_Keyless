@@ -19,6 +19,7 @@ export class SmartphoneComponent {
 
   // Formularfelder Auth
   authDeviceId = '';
+  authUserName = '';
   authSecretHash = '';
   authToken: string | null = null;
 
@@ -45,7 +46,7 @@ export class SmartphoneComponent {
       userName: this.regUserName.trim(),
       secretHash: this.regSecretHash.trim()
     };
-    if (!body.deviceId || !body.userName || !body.secretHash) { this.errorMsg = 'Alle Felder ausfüllen'; return; }
+    if (!body.deviceId || !body.userName || !body.secretHash) { alert('Bitte alle Felder ausfüllen'); return; }
 
     this.smartphoneService.registerSmartphone(body).subscribe({
       next: _ => { this.clearRegForm(); this.loadList(); alert('Registrierung erfolgreich'); },
@@ -55,17 +56,25 @@ export class SmartphoneComponent {
 
   requestToken(): void {
     const did = this.authDeviceId.trim();
+    const us  = this.authUserName.trim();
     const sh  = this.authSecretHash.trim();
-    if (!did || !sh) { this.errorMsg = 'DeviceId und SecretHash erforderlich'; return; }
+    if (!did || !us || !sh) { alert('Bitte alle Felder ausfüllen'); return; }
 
-    this.smartphoneService.requestToken(did, sh).subscribe({
-      next: res => { this.authToken = res.auth_token; alert('Token erhalten'); },
-      error: _ => { this.authToken = null; this.errorMsg = 'Auth fehlgeschlagen'; }
+    this.smartphoneService.requestToken(did, us, sh).subscribe({
+      next: res => { this.authToken = res.auth_token; alert('Token erhalten'); this.clearAuthForm(); },
+      error: _ => { this.authToken = null; alert('Auth fehlgeschlagen'); }
     });
   }
 
   clearRegForm(): void {
     this.regDeviceId = ''; this.regUserName = ''; this.regSecretHash = '';
+  }
+
+  clearAuthForm(): void {
+    this.authDeviceId = '';
+    this.authUserName = '';
+    this.authSecretHash = '';
+    // this.authToken = null;
   }
 }
 

@@ -25,8 +25,8 @@ getAll(): Observable<Smartphone[]> {
 }
 
 // Auth-Token anfordern (Login)
-requestToken(deviceId: string, secretHash: string): Observable<{ auth_token: string }> {
-  return this.http.post<{ auth_token: string }>(`${this.baseUrl}/request`, { deviceId, secretHash });
+requestToken(deviceId: string, userName: string, secretHash: string): Observable<{ auth_token: string }> {
+  return this.http.post<{ auth_token: string }>(`${this.baseUrl}/request`, { deviceId, userName, secretHash });
 }
 
 deleteSmartphone(id: number) {

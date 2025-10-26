@@ -30,7 +30,7 @@ public class SmartphoneController {
     @PostMapping("/request")
     public ResponseEntity<?> requestToken(@RequestBody SmartphoneRegistrationDTO dto) {
         // smartphoneService prüft device + hash und erzeugt Token (oder null bei Fehler)
-        String token = smartphoneService.authenticateAndGenerateToken(dto.getDeviceId(), dto.getSecretHash());
+        String token = smartphoneService.authenticateAndGenerateToken(dto.getDeviceId(), dto.getUserName(), dto.getSecretHash());
 
         if (token == null) {
             return ResponseEntity.status(401).body(Map.of("error", "unauthorized"));
