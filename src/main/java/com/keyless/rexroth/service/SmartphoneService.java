@@ -59,6 +59,9 @@ public class SmartphoneService {
         String token = UUID.randomUUID().toString().replace("-", "");
         tokenStore.put(token, deviceId);
 
+        // Status -> active equals Token generiert
+        device.setStatus("active");
+
         // Zeitstempel aktualisieren
         device.setLastSeen(java.time.LocalDateTime.now());
         smartphoneRepository.save(device);
@@ -94,8 +97,8 @@ public class SmartphoneService {
         s.setDeviceId(deviceId);
         s.setUserName(userName);
         s.setSecretHash(secretHash);
-        s.setStatus("active");
-        s.setLastSeen(java.time.LocalDateTime.now());
+        s.setStatus("inactive");
+        // s.setLastSeen(java.time.LocalDateTime.now());
         return smartphoneRepository.save(s);
     }
 

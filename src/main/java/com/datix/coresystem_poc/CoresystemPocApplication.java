@@ -42,7 +42,7 @@ public class CoresystemPocApplication {
                 s.setDeviceId("9e4a6c41b203d8a7");
                 s.setSecretHash("cc03e747a6afbbcbf8be7668acfebee5");
                 s.setUserName("Alejandro");
-                s.setStatus("active");
+                s.setStatus("inactive");
                 repo.save(s);
 
                 System.out.println("✅ Smartphone-Datensatz in H2 gespeichert.");
