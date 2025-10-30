@@ -79,6 +79,18 @@ public class SmartphoneController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/rcus/{smartphoneId}")
+    public ResponseEntity<List<RCU>> getSmartphoneRcus(@PathVariable String smartphoneId) {
+        List<RCU> rcus = smartphoneService.getRcusForSmartphone(smartphoneId);
+
+        if (rcus.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+
+        return ResponseEntity.ok(rcus);
+    }
+
 
 
 

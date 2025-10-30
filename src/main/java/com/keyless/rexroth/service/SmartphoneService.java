@@ -7,10 +7,8 @@ import com.keyless.rexroth.entity.Smartphone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
@@ -166,6 +164,28 @@ public class SmartphoneService {
             rcuRepository.save(rcu);
         }
     }
+
+    public List<RCU> getRcusForSmartphone(String smartphoneId) {
+        Smartphone existing = smartphoneRepository.findByDeviceId(smartphoneId);
+        if (existing == null) {
+            return Collections.emptyList(); // besser als null zurückgeben
+        }
+
+        List<RCU> rcuList = rcuRepository.findAll();
+        List<RCU> assignedrcus = new ArrayList<>();
+
+        for (RCU rcu : rcuList) {
+            if (rcu.getAssignedSmartphone() != null &&
+                    rcu.getAssignedSmartphone().getDeviceId().equals(smartphoneId)) {
+                assignedrcus.add(rcu);
+            }
+        }
+
+
+        return assignedrcus;
+    }
+
+
 
 }
 
