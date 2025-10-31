@@ -11,8 +11,8 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'smartphone', component: SmartphoneComponent },
-  { path: 'rcu', component: RcuComponent},
-  { path: 'rcu/assign', component: RcuAssignComponent}
+  { path: 'maschine', component: RcuComponent},
+  { path: 'maschine/assign', component: RcuAssignComponent}
 ];
 
 // @NgModule({

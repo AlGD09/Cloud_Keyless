@@ -37,12 +37,12 @@ export class RcuComponent {
     const newRcu: Rcu = { rcuId: this.rcuId, name: this.name, location: this.location };
     this.rcuService.registerRcu(newRcu).subscribe({
       next: rcu => {
-        this.message = 'RCU erfolgreich registriert!';
-        this.rcuId = '';
+        this.message = 'Maschine erfolgreich registriert!';
         this.name = '';
+        this.rcuId = '';
         this.location = '';
         // 🔹 Nach erfolgreicher Registrierung weiterleiten zur Zuweisungsseite
-        this.router.navigate(['/rcu/assign'], { queryParams: { id: rcu.id, name: rcu.name } });
+        this.router.navigate(['/maschine/assign'], { queryParams: { name: rcu.name, id: rcu.id } });
       },
       error: err => {
         this.message = err.error?.message || 'Fehler bei der Registrierung.';

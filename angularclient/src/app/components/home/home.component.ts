@@ -113,7 +113,7 @@ export class HomeComponent {
   }
 
   openAssignPage(id: number, name: string): void{
-    this.router.navigate(['/rcu/assign'], { queryParams: { id: id, name: name } });
+    this.router.navigate(['/maschine/assign'], { queryParams: { id: id, name: name } });
   }
 
   unassign(rcuId: string, smartphoneId: number): void{

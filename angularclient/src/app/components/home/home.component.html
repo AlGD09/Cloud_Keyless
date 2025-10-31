@@ -58,17 +58,17 @@
       </div>
     </section>
 
-    <!-- RCUs -->
+    <!-- Maschinen -->
     <section class="bg-white shadow-sm rounded-2xl p-6 border border-gray-100">
-      <h2 class="text-xl font-medium text-gray-800 mb-4">RCUs</h2>
+      <h2 class="text-xl font-medium text-gray-800 mb-4">Maschinen</h2>
 
       <div class="overflow-x-auto">
         <table class="w-full text-sm text-left border-t border-gray-200 min-w-[600px]">
           <thead class="bg-gray-50 text-gray-600 text-xs uppercase">
           <tr>
             <th class="px-4 py-2">ID</th>
-            <th class="px-4 py-2">RCU-ID</th>
             <th class="px-4 py-2">Name</th>
+            <th class="px-4 py-2">RCU-ID</th>
             <th class="px-4 py-2">Ort</th>
             <th class="px-4 py-2 text-right">Aktionen</th>
           </tr>
@@ -80,8 +80,8 @@
             class="hover:bg-blue-50 transition text-gray-700 align-middle"
           >
             <td class="px-4 py-2 whitespace-nowrap">{{ r.id }}</td>
-            <td class="px-4 py-2 whitespace-nowrap">{{ r.rcuId }}</td>
             <td class="px-4 py-2">{{ r.name }}</td>
+            <td class="px-4 py-2 whitespace-nowrap">{{ r.rcuId }}</td>
             <td class="px-4 py-2">{{ r.location || '—' }}</td>
             <td class="px-4 py-2 text-right">
               <button
@@ -115,8 +115,8 @@
       <table class="w-full text-sm text-left border-t border-gray-200 min-w-[650px]">
         <thead class="bg-gray-50 text-gray-600 text-xs uppercase">
         <tr>
+          <th class="px-4 py-2">Maschinenname</th>
           <th class="px-4 py-2">RCU-ID</th>
-          <th class="px-4 py-2">RCU-Name</th>
           <th class="px-4 py-2">Zugewiesene Smartphones</th>
         </tr>
         </thead>
@@ -126,10 +126,10 @@
           *ngFor="let a of assignments"
           class="hover:bg-blue-50 transition text-gray-700 align-top"
         >
+          <td class="px-4 py-2">{{ a.rcuName }}</td>
           <td class="px-4 py-2 whitespace-nowrap font-medium">
             {{ a.rcuId }}
           </td>
-          <td class="px-4 py-2">{{ a.rcuName }}</td>
           <td class="px-4 py-2">
 
             <ng-container *ngIf="a.smartphones.length; else none">

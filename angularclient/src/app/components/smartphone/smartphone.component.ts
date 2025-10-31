@@ -3,6 +3,7 @@ import { SmartphoneService } from '../../services/smartphone.service';
 import { Smartphone } from '../../model/smartphone';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-smartphone',
@@ -28,7 +29,10 @@ export class SmartphoneComponent {
   loading = false;
   errorMsg = '';
 
-  constructor(private smartphoneService: SmartphoneService) {
+  constructor(
+    private smartphoneService: SmartphoneService,
+    private router: Router
+    ) {
     this.loadList();
   }
 
@@ -49,7 +53,7 @@ export class SmartphoneComponent {
     if (!body.deviceId || !body.userName || !body.secretHash) { alert('Bitte alle Felder ausfüllen'); return; }
 
     this.smartphoneService.registerSmartphone(body).subscribe({
-      next: _ => { this.clearRegForm(); this.loadList(); alert('Registrierung erfolgreich'); },
+      next: _ => { this.clearRegForm(); this.loadList(); alert('Registrierung erfolgreich'); setTimeout(() => this.router.navigate(['/home']), 1200);},
       error: err => { this.errorMsg = err.error?.message || 'Registrierung fehlgeschlagen'; }
     });
   }
