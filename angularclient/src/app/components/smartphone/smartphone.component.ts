@@ -24,8 +24,12 @@ export class SmartphoneComponent {
   authSecretHash = '';
   authToken: string | null = null;
 
+  //Formular Hash
+  secretHash: string | null = null;
+
   // Liste
   phones: Smartphone[] = [];
+  selectedSmartphoneId: number | null = null;
   loading = false;
   errorMsg = '';
 
@@ -69,6 +73,21 @@ export class SmartphoneComponent {
       error: _ => { this.authToken = null; alert('Auth fehlgeschlagen'); }
     });
   }
+  requestHash(): void {
+      if (!this.selectedSmartphoneId) {
+            alert('Bitte ein Smartphone auswählen.');
+            return;
+      }
+
+      this.smartphoneService.getSecretHash(this.selectedSmartphoneId).subscribe({
+        next: has => {
+                this.secretHash = has.secret_hash; this.clearHashForm();
+              },
+              error: () => { this.secretHash = null; alert('Anforderung fehlgeschlagen'); }
+      })
+
+
+  }
 
   clearRegForm(): void {
     this.regDeviceId = ''; this.regUserName = ''; this.regSecretHash = '';
@@ -80,5 +99,11 @@ export class SmartphoneComponent {
     this.authSecretHash = '';
     // this.authToken = null;
   }
+
+  clearHashForm(): void {
+    this.selectedSmartphoneId = null;
+    }
+
+
 }
 

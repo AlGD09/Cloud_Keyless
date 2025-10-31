@@ -91,6 +91,18 @@ public class SmartphoneController {
         return ResponseEntity.ok(rcus);
     }
 
+    @GetMapping("/hash/{smartphoneId}")
+    public ResponseEntity<?> getSmartphoneHash(@PathVariable Long smartphoneId) {
+        String hash = smartphoneService.getSecretHash(smartphoneId);
+
+        if (hash == null) {
+            return ResponseEntity.status(404).body(Map.of("message", "Kein Hash gefunden."));
+        }
+
+
+        return ResponseEntity.ok(Map.of("secret_hash", hash));
+    }
+
 
 
 

@@ -185,6 +185,13 @@ public class SmartphoneService {
         return assignedrcus;
     }
 
+    public String getSecretHash(Long smartphoneId){
+        Smartphone device = smartphoneRepository.findById(smartphoneId).orElse(null);
+        if (device == null) return null;
+
+        return device.getSecretHash();
+    }
+
 
 
 }

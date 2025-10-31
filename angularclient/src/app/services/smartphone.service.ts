@@ -37,5 +37,9 @@ unassignSmartphone(rcuId: string, smartphoneId: number) {
   return this.http.post(`${this.baseUrl}/unassign`, { rcuId, smartphoneId });
 }
 
+getSecretHash(smartphoneId: number): Observable<{ secret_hash : string }> {
+  return this.http.get<{ secret_hash: string }>(`${this.baseUrl}/hash/${smartphoneId}`);
+  }
+
 
   }
